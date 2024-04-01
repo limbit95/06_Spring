@@ -1,0 +1,31 @@
+프레임 워크 -> 집 / 라이브러리 -> 가구
+프레임 워크란? : 기본 구조와 뼈대를 제공하는 틀
+라이브러리란? : 자주 사용 되는 기능을 모아둔 코드의 집합
+어노테이션이란? : 컴파일러가 읽는 주석을 뜻함
+DBCP(Data Base Connection Pool) : Connection 알아서 연결해주고 알아서 반납해줌(커넥션을 미리 많이 만들어둠)
+
+---------------------- IOC ---------------------- 
+Bean이란? : Spring에서 IOC를 이용해 직접 생성하고 생명 주기 제어를 담당하는 객체
+다운로드 받은 파일 압축 해제 
+
+
+---------------------- 설치 ---------------------- 
+https://spring.io/tools
+4.22.0 - windows x86_64 버전 다운로드
+압축 푼 폴더 안에 contenst 파일 압축 해제
+기존 이클립스 사용할 때 lombok파일을 이클립스 실행 파일과 같은 경로에 복사 붙여넣기 한 것처럼 STS4도 동일하게 실행 파일과 같은 경로에 lombok 파일 복사 붙여넣기 이후 lombok 인식 시키기
+파일 실행 -> Windows Defender Exclusion Check 창 뜨면 첫번째 선택 옵션 누르고 Proceed 클릭(Exclude Spring Tool Suite 4 from being scanned to improve performance.(In general adding exclusions may affect the security level of this computer))
+
+---------------------- 프로젝트 생성 ---------------------- 
+Spring Starter Project 타입으로 새로운 프로젝트 생성(상단 메뉴 중 File 에서 New - Other - Spring Starter Project 검색 후 next 클릭)
+초기 필요한 라이브러리 : Spring Web, thymeleaf, Spring Configuration Processor, Lombok, Spring Boot DevTools 총 5개
+
+
+---------------------- 공부 ---------------------- 
+RestAPI에 대해서 : 역등성
+
+
+---------------------- 메모 ---------------------- 
+
+
+---------------------- 기타 ---------------------- 
