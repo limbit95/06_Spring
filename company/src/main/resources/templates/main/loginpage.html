@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 페이지</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+    <main>
+        
+        <h1>회사 이름</h1>
+        
+        <form action="/login" method="post" class="login-form" autocomplete="off">
+            <div>
+                <p>ID</p>
+                <input type="text" name="inputId">
+            </div>
+            
+            <div>
+                <p>Password</p>
+                <input type="password" name="inputPw">
+            </div>
+            
+            <button>로그인</button>
+        </form>
+
+    </main>
+
+    <th:block th:if="${message != null}">
+        <script>
+            alert("아이디 또는 비밀번호 불일치");
+        </script>
+    </th:block>
+
+</body>
+</html>

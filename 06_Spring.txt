@@ -20,12 +20,16 @@ https://spring.io/tools
 Spring Starter Project 타입으로 새로운 프로젝트 생성(상단 메뉴 중 File 에서 New - Other - Spring Starter Project 검색 후 next 클릭)
 초기 필요한 라이브러리 : Spring Web, thymeleaf, Spring Configuration Processor, Lombok, Spring Boot DevTools 총 5개
 
+---------------------- 라이브러리 ---------------------- 
+MVN 사이트에서 원하는 gradle 링크 가져와 build.gradle 파일에 dependencies 구문 안에 넣고 build.gradle 파일 우클릭 gradle - refresh gradle project 클릭
 
 ---------------------- 공부 ---------------------- 
-RestAPI에 대해서 : 역등성
+RestAPI에 대해서 : 멱등성
 
 
 ---------------------- 메모 ---------------------- 
+github 관리 배우기
+figma 사용법 배우기
 
 
 ---------------------- 기타 ---------------------- 

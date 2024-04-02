@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,10 +18,6 @@
         <button>제출하기</button>
     </form>
 
-    <p th:text="${inputName}"></p>
-    <p th:text="${inputAge}"></p>
-    <p th:text="${inputAddress}"></p>
-
     <hr>
 
     <h3>
@@ -37,8 +33,48 @@
 
         <button>제출하기</button>
     </form>
-
     
+    <hr>
+    
+    <h3>
+        3. @RequestParam 어노테이션을 이용
+        - 여러 개(복수) 파라미터 Controller 에서 얻어오는 방법
+    </h3>
+    
+    <form action="/param/test3" method="post">
+        색상 : 
+        Red <input type="checkbox" name="color" value="Red">
+        Green <input type="checkbox" name="color" value="Green">
+        Blue <input type="checkbox" name="color" value="Blue">
+        
+        <br><br>
+        
+        과일 : 
+        Apple <input type="checkbox" name="fruit" value="Apple">
+        Banana <input type="checkbox" name="fruit" value="Banana">
+        Orange <input type="checkbox" name="fruit" value="Orange">
+        
+        <br><br>
+        
+        상품명 : <input type="text" name="productName">
+        유통기한 : <input type="date" name="expirationDate">
+        
+        <br><br>
+        <button>제출하기</button>
+    </form>
+    
+    <hr>
+    
+    <h3>4. @ModelAttribute를 이용한 파라미터 얻어오기</h3>
+    
+    <form action="/param/test4" method="post">
+        ID : <input type="text"     name="memberId"> <br>
+        PW : <input type="password" name="memberPw"> <br>
+        NAME : <input type="text" name="memberName"> <br>
+        AGE : <input type="number"  name="memberAge"> <br>
+
+        <button>제출하기</button>
+    </form>
 
 </body>
 </html>

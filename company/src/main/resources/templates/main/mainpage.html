@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 성공 페이지</title>
+    
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+    <th:body th:if="${loginMember.dept.equals('D1')}">
+        <h1>사원</h1>
+        <br><br>
+
+        <div>
+            <a href=#none id="show1" style="text-decoration: none; color: black;"
+            onclick="
+            if(hide1.style.display=='none') {
+                hide1.style.display='block';
+                // show.innerText='- 내용접기'
+            } else {
+                hide1.style.display='none';
+                // show.innerText='+ 내용펼치기'
+            }">기안</a>
+    
+            <div id="hide1" style="display: none">
+                <li>기안문 작성</li>
+            </div>
+        </div>
+
+        <br>
+
+        <div>
+            <a href=#none id="show2" style="text-decoration: none; color: black;"
+            onclick="
+            if(hide2.style.display=='none') {
+                hide2.style.display='block';
+                // show.innerText='- 내용접기'
+            } else {
+                hide2.style.display='none';
+                // show.innerText='+ 내용펼치기'
+            }">결재</a>
+    
+            <div id="hide2" style="display: none">
+                <ol>결재 대기함
+                    <ol>
+                        <li>기안서(품의)</li>
+                    </ol>
+                </ol>
+                <ol>결재 진행함
+                    <ol>
+                        <li>기안서(과장 승인 - 대표 결재 대기)</li>
+                    </ol>
+                </ol>
+                <ol>결재 완료함
+                    <ol>
+                        <li>기안서(과장 승인)</li>
+                        <li>기안서(대표 승인)</li>
+                    </ol>
+                </ol>
+                <ol>반려 문서함
+                    <ol>
+                        <li>기안서(과장 반려)</li>
+                        <li>기안서(대표 반려)</li>
+                    </ol>
+                </ol>
+            </div>
+        </div>
+        
+    </th:body>
+
+
+    
+    <th:body th:if="${loginMember.dept.equals('D2')}">
+        <h1>과장</h1>
+
+        <div>
+            <a href=#none id="show1" style="text-decoration: none; color: black;"
+            onclick="
+            if(hide1.style.display=='none') {
+                hide1.style.display='block';
+                // show.innerText='- 내용접기'
+            } else {
+                hide1.style.display='none';
+                // show.innerText='+ 내용펼치기'
+            }">기안</a>
+    
+            <div id="hide1" style="display: none">
+                <li>기안문 작성</li>
+            </div>
+        </div>
+
+        <br>
+
+        <div>
+            <a href=#none id="show2" style="text-decoration: none; color: black;"
+            onclick="
+            if(hide2.style.display=='none') {
+                hide2.style.display='block';
+                // show.innerText='- 내용접기'
+            } else {
+                hide2.style.display='none';
+                // show.innerText='+ 내용펼치기'
+            }">결재</a>
+    
+            <div id="hide2" style="display: none">
+                <ol>결재 대기함
+                    <ol>
+                        <li>기안서(사원 품의)</li>
+                        <li>기안서(과장 품의)</li>
+                    </ol>
+                </ol>
+                <ol>결재 진행함
+                    <ol>
+                        <li>사원 기안서(과장 승인 - 대표 결재 대기)</li>
+                    </ol>
+                </ol>
+                <ol>결재 완료함
+                    <ol>
+                        <li>기안서(대표 승인)
+                            <ol>
+                                <li>사원 기안서</li>
+                                <li>과장 기안서</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </ol>
+                <ol>반려 문서함
+                    <ol>
+                        <li>사원 기안서(과장 반려)</li>
+                        <li>사원 기안서(과장 승인 - 대표 반려)</li>
+                        <li>과장 기안서(대표 반려)</li>
+                    </ol>
+                </ol>
+            </div>
+        </div>
+    </th:body>
+
+
+    <th:body th:if="${loginMember.dept.equals('D3')}">
+        <h1>대표</h1>
+
+        <div>
+            <a href=#none id="show2" style="text-decoration: none; color: black;"
+            onclick="
+            if(hide2.style.display=='none') {
+                hide2.style.display='block';
+                // show.innerText='- 내용접기'
+            } else {
+                hide2.style.display='none';
+                // show.innerText='+ 내용펼치기'
+            }">결재</a>
+    
+            <div id="hide2" style="display: none">
+                <li>결재 대기함</li>
+                <li>결재 완료함</li>
+                <li>반려 문서함</li>
+            </div>
+        </div>
+    </th:body>
+
+    
+</body>
+</html>
