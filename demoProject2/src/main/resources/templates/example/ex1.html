@@ -79,7 +79,18 @@
 
     <ul>
         <th:block th:each="fruit : ${fruitList}">
-            <li th:text="${fruit}"></li>
+                <li th:text="${fruit}"></li>
+            </th:block>
+        </th:block>
+    </ul>
+
+    <hr>
+
+    <h3>th:each 개인 연습</h3>
+
+    <ul>
+        <th:block th:each="i : ${#numbers.sequence(0, fruitList.size()-1 )}">
+            <li th:text="|${i+1}. ${fruitList[{i}]}|"></li>
         </th:block>
     </ul>
 
