@@ -73,6 +73,7 @@ public class DBConfig {
 	
 	// ************ Mybatis 설정 ************
 	
+	@Bean
 	public SqlSessionFactory sessionFactory(DataSource dataSource) throws Exception{
 		SqlSessionFactoryBean sessionFactoryBean = new SqlSessionFactoryBean();
 		
@@ -108,13 +109,13 @@ public class DBConfig {
 	// SqlSessionTemplate : Connection + DBCP + Mybatis + 트랜잭션 제어 처리
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sessionFactory) {
-	return new SqlSessionTemplate(sessionFactory);
+		return new SqlSessionTemplate(sessionFactory);
 	}
 	
 	// DataSourceTransactionManager : 트랜잭션 매니저(제어 처리)
 	@Bean
 	public DataSourceTransactionManager dataSourceTransactionManager(DataSource dataSource) {
-	return new DataSourceTransactionManager(dataSource);
+		return new DataSourceTransactionManager(dataSource);
 	}
 	
 }

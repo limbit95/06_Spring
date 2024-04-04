@@ -1,0 +1,10 @@
+<!-- message 값 alert 띄워줄 script 작성 -->
+
+<script th:inline="javascript">
+    // 전달받은 message가 없으면 null
+    const message = /*[[${message}]]*/ "전달받은 메세지";
+    
+    if(message != null) {
+        alert(message);
+    }
+</script>

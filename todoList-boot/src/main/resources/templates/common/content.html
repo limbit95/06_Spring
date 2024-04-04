@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TodoContent</title>
+</head>
+<body>
+    
+    <th:block th:object="${todo}">
+        <h1 th:text="|제목 : *{todoTitle}|"></h1>
+        
+        <h3 th:text="|등록 날짜 : *{regDate}|"></h3>
+        
+        <h3 th:text="|내용 : *{todoContent}|"></h3>
+    </th:block>
+
+</body>
+</html>

@@ -140,7 +140,7 @@ public class ParameterController {
 	
 	@PostMapping("/test4")
 	public String paramTest4(MemberDTO inputMember){
-												// 커맨드 객체
+									  // 커맨드 객체
 		
 		log.debug("inputMember : " + inputMember.toString());
 		
