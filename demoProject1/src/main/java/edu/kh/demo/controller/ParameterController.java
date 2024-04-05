@@ -139,9 +139,8 @@ public class ParameterController {
 	// *** @ModelAttribute 어노테이션은 생략 가능 ***
 	
 	@PostMapping("/test4")
-	public String paramTest4(MemberDTO inputMember){
+	public String paramTest4( MemberDTO inputMember){
 									  // 커맨드 객체
-		
 		log.debug("inputMember : " + inputMember.toString());
 		
 		

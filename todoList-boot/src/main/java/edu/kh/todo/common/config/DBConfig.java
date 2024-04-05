@@ -83,7 +83,7 @@ public class DBConfig {
 		// -> Mybatis 코드 수행 시 mapper.xml을 읽을 수 있음
 		// sessionFactoryBean.setMapperLocations("현재프로젝트.자원.어떤파일");
 		
-	
+		
 		sessionFactoryBean.setMapperLocations
 		(applicationContext.getResources("classpath:/mappers/**.xml") );
 		

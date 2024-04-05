@@ -1,0 +1,29 @@
+1. 새로운 Repository 생성하고, 해당 Repositoy에 올리고자 하는 프로젝트 폴더와 github 연동 시키기
+2. 프로젝트 branch 운영 방식
+ - 운영용 : main
+ - 개발용 : development - 팀장, 팀A, 팀B, 팀C
+3. branch 
+ - git branch development : 새로운 branch 생성(github에 올라가지 않은 상태)
+ - git branch : 로컬에 있는 branch 목록 조회
+ - git push origin "브랜치명" : 생성한 branch github에 올리기
+ - git checkout "브랜치명" : 다른 branch 이동
+ - git checkout -b "브랜치명" : branch 생성과 동시에 그 branch로 이동(github에 올라가지 않은 상태)
+ - git branch --set-upstream-to=origin/"원격저장소의 브랜치" "로컬의 브랜치명" : 원격 브랜치와 로컬 브랜치 연결하기
+(팀원용)
+- git branch : 로컬에 있는 branch만 조회
+- git branch -a : 원격저장소에 있는 branch까지 조회
+- git remote update : 로컬저장소에 있는 모든 branch의 원격저장소 정보를 업데이트
+- git checkout -t origin/"브랜치명" : 원격저장소에 있는 branch를 로컬로 가져오면서 해당 branch로 이동
+
+4. Pull Requests
+ - 코드 작성한 프로젝트 내 branch에 push 한 이후
+ - github 해당 Repository에서 상단 Pull requests 클릭
+ - 오른쪽에 new pull request 클릭
+ - 하단에 변경된 사항 색상으로 구별되어 있음
+ - 오른쪽 상단에 create pull request 클릭
+ - 하단에 create pull request 클릭
+ - 팀원과 상의 끝 merge 하기로 결정했다면 하단에 merge pull request 클릭 merge confirm 클릭
+
+
+
+- git merge --abort : merge 이전으로 되돌리기
