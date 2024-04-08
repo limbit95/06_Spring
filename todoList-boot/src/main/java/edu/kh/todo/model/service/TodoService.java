@@ -52,5 +52,22 @@ public interface TodoService {
 	 * @return result
 	 */
 	int todoDelete(int todoNo);
+
+// Ajax 비동기 통신을 통한 요청 응답 처리 구문
+	
+	/** 전체 할 일 개수 조회
+	 * @return
+	 */
+	int getTotalCount();
+
+	/** 완료된 할 일 개수 조회
+	 * @return
+	 */
+	int getCompleteCount();
+
+	/** 할 일 목록 조회
+	 * @return todoList
+	 */
+	List<Todo> selectList();
 	
 }

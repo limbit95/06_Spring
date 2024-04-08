@@ -95,4 +95,26 @@ public class TodoServiceImpl implements TodoService{
 		return mapper.todoDelete(todoNo);
 	}
 	
+// Ajax 비동기 통신을 통한 요청 응답 처리 구문
+
+	// 전체 할 일 개수 조회
+	@Override
+	public int getTotalCount() {
+		// TODO Auto-generated method stub
+		return mapper.getTotalCount();
+	}
+
+	// 완료된 할 일 개수 조회
+	@Override
+	public int getCompleteCount() {
+		// TODO Auto-generated method stub
+		return mapper.getCompleteCount();
+	}
+
+	// 할 일 목록 조회
+	@Override
+	public List<Todo> selectList() {
+		return mapper.selectAll();
+	}
+	
 }
