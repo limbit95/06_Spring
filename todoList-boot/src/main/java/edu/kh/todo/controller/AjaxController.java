@@ -151,6 +151,7 @@ public class AjaxController {
 		return service.todoUpdate(todo);
 	}
 	
+	// 완료여부 변경
 	@ResponseBody
 	@PutMapping("changeComplete")
 	public int changeComplete(@RequestBody Todo todo) {

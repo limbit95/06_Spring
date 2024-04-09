@@ -1,0 +1,14 @@
+1. 프로젝트 생성 후 DB 연결 정보 작성하지 않고 바로 서버 구동 하고 싶을 때는 DB 관련 라이브러리 주석처리 후 build.gradle refresh 한 후에 서버 띄워야 서버가 돌아감
+
+2. BoardProjectBootApplication 클래스 내부 클래스이름 위에 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class}) 추가
+- spring Security에서 기본 제공하는 로그인 페이지 이용 안하겠다라는 구문
+
+3. 쿠키와 세션
+쿠키 : 클라이언트 관리
+세션 : 서버에서 관리
+
+4. application.properties 파일에 server.servlet.session.tracking-modes=cookie 추가
+- url에 jsessionId가 보여질 때 jsessionId를 쿠키에 담으라는 설정값임
+- 웹에서 jsessionId 확인하기 - 크롬 기준 - F12 누르기 - 상단 탭 중 Application 클릭 - Storage에서 Cookies 클릭 - 안의 url 클릭 - 오른쪽에서 jsessionId 확인 가능
+
+5. 
