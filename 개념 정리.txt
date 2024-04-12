@@ -11,9 +11,10 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 3. dataset
 - value 값을 지정할 수 없는 div, span, h와 같은 태그에 값을 지정하기 위해 사용하는 속성
 - 태그에 직접 data-test="test" 이런식으로 삽입하여 사용가능하지만 js 내에서 우회하여 속성 추가도 가능
-- js에서 html의 태그 요소를 얻어와 const 변수명 에 지정한 후 해당 변수명.setAttribute("data-test", "test"); 로도 속성 삽입 가능하다
+- js에서 html의 태그 요소를 얻어와 const 변수명 에 지정한 후 해당 변수명.setAttribute("data-test", "값"); 로도 속성 삽입 가능하다
 - 참고로 data- 이후의 지정명이 속성값 이름으로 지정되는 것이며 data- 이후에 나오는 - 하이픈은 js에서 인식할 수 없기때문에 - 뒤에 붙은 문자는 대문자 즉 카멜표기법과 같이 변형이 된다
 - ex) data-user-name == userName
+- thymeleaf를 통해 값 지정 가능 : <button th:data-member-no="${Member.memberNo}"></button>
 
 4. 평문, 암호화
 

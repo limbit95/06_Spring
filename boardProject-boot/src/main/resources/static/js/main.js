@@ -30,7 +30,7 @@ const getCookie = (key) => {
 
     return obj[key];  // 매개변수로 전달 받은 key와
                       // obj 객체에 저장된 Key가 일치하는 요소의 Value 값 반환
-}   
+};
 
 // console.log(getCookie("saveId"));
 
@@ -48,7 +48,7 @@ if(loginEmail != null) { // 로그인 창의 이메일 입력부분이 화면에
         // 아이디 저장 체크박스에 체크 해두기
         document.querySelector("input[name='saveId']").checked = true;
     }
-}
+};
 
 
 
