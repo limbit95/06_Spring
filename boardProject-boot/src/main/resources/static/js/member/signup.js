@@ -480,7 +480,7 @@ signUpForm.addEventListener("submit", e => {
             document.getElementById(key).focus(); // 초점 이동
 
             e.preventDefault(); // form 태그 기본 이벤트(제출) 막기
-
+            
             return;
         }
     };
