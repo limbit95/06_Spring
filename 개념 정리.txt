@@ -15,6 +15,7 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 - 참고로 data- 이후의 지정명이 속성값 이름으로 지정되는 것이며 data- 이후에 나오는 - 하이픈은 js에서 인식할 수 없기때문에 - 뒤에 붙은 문자는 대문자 즉 카멜표기법과 같이 변형이 된다
 - ex) data-user-name == userName
 - thymeleaf를 통해 값 지정 가능 : <button th:data-member-no="${Member.memberNo}"></button>
+- data-* 속성 추가 후 JS에서 해당 속성 값 다른 변수에 값 대입할 때 todoList-boot 프로젝트 내 ajax-main.js 파일에서 449번줄 코드 참고
 
 4. 평문, 암호화
 

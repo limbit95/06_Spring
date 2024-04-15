@@ -1,0 +1,72 @@
+- @RequestMapping("") : Get/Post 가리지 않음
+  1) 주로 클래스명 위에 명시 -> 공통되는 값을 작성
+  2) ex : 클래스명 위에 @RequestMapping("member") 
+	  해당 클래스 내부의 메서드명 위에 
+	  @GetMapping("login")  ==  /member/login
+	  @GetMapping("logou")  ==  /member/logout
+
+- HttpServletRequest : 메서드의 매개변수에 작성
+  1) public String test(HttpServletRequest req)
+  2) 요청 클라이언트 정보, 제출된 파라미터 등을 저장한 객체
+  3) String memberName = req.getParameter("memberName"); 
+
+- @RequestParam : [작성법] : @RequestParam("memberName") String memberName
+  1) 속성 추가 작성법
+    (1) value : 전달 받은 input 태그의 name 속성값
+    (2) required : 입력된 name 속성값 파라미터 필수 여부 지정(기본값 true)
+		   -> required=true인 파라미터의 값이 존재하지 않으면 400 Bad Request 에러 발생
+    (3) defaultValue : 파라미터 값이 존재하지 않을 때 대신 대입할 값 지정
+			-> defaultValue="test"
+  2) String[], List<자료형>, Map<자료형, 자료형>으로 파라미터 전달 받을 수 있음
+    (1) @RequestParam String[] colorArr
+        -> 지정한 값들만 담고 싶다면 value 속성 이용
+	-> value="color" 라고 작성하면 해당 이 배열에는 name="color" 인 요소들의 값만 대입됨
+    (2) @RequestParam List<String> fruitList
+    (3) @RequestParam Map<String, Object> map
+    (4) required 속성 사용 가능 / defaultValue 속성 사용 불가능
+
+- @Autowired : DI (Dependency Injection : 의존성 주입)
+  1) 등록된 Bean 중 같은 타입 또는 상속관계인 Bean을 이 어노테이션을 명시한 필드에 의존성 주입
+
+- RedirectAttributes : redirect 시 데이터를 session scope에 잠시 담아 전달할 수 있는 객체 
+  		       응답 후 request scope로 되돌아감 즉, redirect 시 request scope으로 담아 
+		       forward 하려는 페이지에 전달할 수 있는 객체임
+  1) RedirectAttributes.addFlashAttribute("key", value); 
+
+- @ResponseBody : Controller 메서드의 반환값을 HTTP 응답 본문에 직접 바인딩하는 역함임을 명시
+  1) Controller 메서드의 반환값을 비동기로 요청했던 HTML/JS 파일 부분에 값을 돌려보냄
+  2) 이 어노테이션을 명시한 메서드의 return 값은 forwadr/redirect 로 인식하지 않음
+
+- @RequestBody : 비동기 요청(ajax)시 전달되는 데이터 중 body 부분에 포함된 요청 데이터를 
+		 알맞은 Java 객체 타입으로 바인딩하는 어노테이션
+  1) JS에서 비동기 요청으로 보낸 body 담은 데이터명이 memberNo 라는 가정하에
+     Controller 메서드 매개변수 담는 공간에 @RequestBody int memberNo 라 작성하면
+     비동기 요청으로 보낸 데이터를 전달받을 수 있음
+
+- HttpMessageConverter
+  1) Spring에서 비동기 통신시 아래 두 가지를 알맞은 형태로 가공(변환)해주는 객체
+    (1) 전달되는 데이터의 자료형
+    (2) 응답하는 데이터의 자료형
+  2) 문자열, 숫자 <-> TEXT / DTO <-> JSON / Map <-> JSON
+  3) 해당 객체가 동작하기 위해 Jackson-data-bind 라이브러리가 필요하나 Spring Boot 모듈이 내장되어 있음
+  4) Jackson : Java에서 JSON을 다루는 방법을 제공하는 라이브러리
+
+- Java <-> JS 서로 자료형 다루는 방식이 다름으로 JSON이라는 형식으로 통일해 데이터를 주고 받음 
+  - JS에서 Java에게 JSON 방식의 데이터 전달하는 방법
+    (1) 단순 문자열, 숫자일 경우 바로 명시 가능 -> JS에서 const memberNo를 바로 body : memberNo 로 작성 가능
+    (2) JS 객체일 경우 JSON.stringify(JS 객체) -> const obj 를 body : JSON.stringify(obj) 로 작성
+        -> JSON.stringify(JS Object) : JS Object 타입을 String 형태의 JSON 데이터로 변환
+  - Java에서 응답받은 JSON 데이터를 JS에서 다룰 때
+    (1) Java에서 응답받은 데이터 then(result(자바 객체)를) JS에서 사용할 때 const memberList = JSON.parse(result) 로 작성 가능
+        -> JSON.parse(JSON 데이터) : String 형태의 JSON 데이터를 JS Object 타입으로 변환
+
+
+
+
+
+
+
+
+
+
+
