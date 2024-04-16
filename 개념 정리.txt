@@ -44,16 +44,28 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
  - 입력된 주소가 Mapping 되어 있는 Java의 Controller의 메서드에서 쿼리스트링으로 전달 받은 값을 통해 데이터 가공 가능
 
 10. JS - append 와 appendChild의 차이 
- - 
+ - append
+   1) 노드 객체, 문자열 추가 가능
+   2) 한 번에 2개 이상의 자식 노드 추가 가능
+   3) return 값 반환 안함
+ - appendChild
+   1) 노드 객체만 추가 가능 (문자열 안됨X)
+   2) 자식 노드 1개만 추가 가능 (2개 이상 X)
+   3) return 값 반환함
 
-11. function test() 와 const test = () => {} 의 차이
- - 
+11. function test() 와 const test = () => {} 의 차이 (https://kimbangg.tistory.com/107)
+ - const = () => {} : block 내부에서만 구현 가능한 범위를 가지고 있음 (다시 선언 될 수 없음)
+   1) 함수를 작성했을 때 해당 함수를 호출할 때 작성한 코드 이후(밑줄)에 선언해야 호출됨
+ - function() : hoisting 허용 -> 작성된 함수 윗줄에 선언하여도 호출이 가능
 
-12. url 뜻 : 
+12. JS - hoisting : 함수 안에 있는 선언들을 모두 끌어올려서 해당 함수 유효 범위의 최상단에 선언하는 것 (https://gmlwjd9405.github.io/2019/04/22/javascript-hoisting.html)
 
-13. 저장경로 명시할 때 '\\' 와 '/' 
+13. url : Uniform Resource Locator (https://www.ascentkorea.com/what-is-url/)
 
-14. a 태그 download 속성 : 
+14. 저장경로 명시할 때 \\ == /
+
+15. a 태그 download 속성 : href에 지정된 파일을 다운로드 해주는 기능
+  - 일반 이미지, 엑셀 템플릿 등 고정된 것들에 한해서만 사용하기에 좋음
 
 
 
