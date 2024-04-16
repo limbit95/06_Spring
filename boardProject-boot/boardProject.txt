@@ -11,4 +11,29 @@
 - url에 jsessionId가 보여질 때 jsessionId를 쿠키에 담으라는 설정값임
 - 웹에서 jsessionId 확인하기 - 크롬 기준 - F12 누르기 - 상단 탭 중 Application 클릭 - Storage에서 Cookies 클릭 - 안의 url 클릭 - 오른쪽에서 jsessionId 확인 가능
 
-5. 
+5. 파일 업로드
+ - 클라이언트가 올린 파일 이름을 서버에서 한 번 rename 함 (올린 날짜 등, 추가(녹화본 보고 적기))
+ - <input type="file" name="name속성값필수임">
+ - 파일 업로드시 Text 값이 아닌 File 객체로 값이 보내짐
+ - 파일 업로드 시에는 해당 form의 enctype은 multipart/form-data 으로 지정해주어야 함
+   - multipart/form-data
+     1) 무조건 POST에서만 동작함
+     2) 제출되는 여러 데이터 타입에 맞춰서 인코딩하여 제출
+     3) 문자열 -> String / 숫자 -> String -> int/double(Spring 이 처리) / File -> 2진 데이터
+ - Controller의 메서드에서 @RequestParam 으로 받을 때 MultipartFile로 받아주어야 함 
+   - (@RequestParam("test") MultipartFile file)
+   - MultipartResolver의 기능임
+   - 업로드한 파일 + 파일에 대한 내용 및 설정 내용 포함되어 있음
+
+
+
+
+
+
+
+
+
+
+
+
+

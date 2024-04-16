@@ -19,7 +19,7 @@
   4) th:switch="${num}"  ->  주로 <th:block></th:block> 태그 안에 사용됨  (${num} == 100이라는 가정하에)
     (1) <p th:case="100">num의 값은 : 100</p>  해당 태그 출력
     (2) <p th:case="200">num의 값은 : 200</p>  해당 태그 출력 안 함
-    (3) <p th:case="*">나머지~</p>  == case문에 작성되어 있지 않은 모든 조건일 경우 이 태그 출력
+    (3) <p th:case="*">나머지~</p> == case문에 작성되어 있지 않은 모든 조건일 경우 이 태그 출력
 
 - 삼항 연산자
   1) <p th:text="${num == 100} ? '100 맞음' : '100 아님'"></p>
@@ -33,10 +33,10 @@
 - th:classappend : 태그 요소에 class 속성 값을 동적으로 추가
   1) <p th:classappend="red">빨간색</p>  ->  style 태그나 해당 html 파일과 연결 되어있는 css 파일에 .red에 대한 정의가 해당 p태그 속성에도 적용됨
   2) <p th:classappend="${num gt 100} ? green : red">num이 100보다 크면 green, 아니면 red class 속성 추가</p>
-  3) class가 있는 상태서 th:classappend 로 새로운 class 추가시 기존에 있던 class를 덮어쒸워버림
+  3) class가 있는 상태서 th:classappend 로 새로운 class 추가시 기존에 있던 class를 덮어씌워버림
 
 - 안전 탐색 연산자 : 객체가 null 일 경우 오류 발생이지만 안전 탐색 연산자를 이용하면 오류 발생 없음
-  1) <p th:texxt="${member}"></p>  ==  ${member} 가 null 이면 아무런 출력 없이 페이지 로드함(원래는 오류 발생으로 페이지 로드 안됨)
+  1) <p th:text="${member?.memberNo}"></p>  ==  ${member.memberNo} 가 null 이면 아무런 출력 없이 페이지 로드함(원래는 오류 발생으로 페이지 로드 안됨)
 
 - JS Inline - Natural Template
   1) 스크립트 태그 내부에서 thymeleaf의 변수, 연산을 사용할 수 있게함

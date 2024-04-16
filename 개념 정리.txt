@@ -28,3 +28,34 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 7. JSON 변환 
 - JSON.parse(JSON 데이터) : String 형태의 JSON 데이터를 JS Object 타입으로 변환
 - JSON.stringify(JS Object) : JS Object 타입을 String 형태의 JSON 데이터로 변환
+
+8. JS - querySelector 와 querySelectorAll 의 차이
+ - querySelector : 하나의 요소만 얻어옴, 속성 값이 갖은 요소가 있다면 코드줄 기준 가장 먼저 해석되는 첫 번째 태그의 요소를 얻어옴
+   - ex) querySelector(".test"); 작성했을 때 class="test" 속성을 갖고 있는 태그가 
+ 	 <h3 class="test"></h3>
+ 	 <h4 class="test"></h4>
+	 두 개일 경우 <h3> 태그의 요소만 얻어옴
+ - querySelectorAll : 같은 속성 값을 갖고 있는 모든 태그의 요소를 List 형태로 담아온다
+   - 얻어온 이 요소를 사용할 때 foreach( (item, index) => {} ) 을 통해서 하나씩 꺼내서 사용해야한다
+   - 통째로 사용 불가능(특히 addEventListener 사용시)
+
+9. JS - location.href
+ - Get 요청 방식임
+ - 입력된 주소가 Mapping 되어 있는 Java의 Controller의 메서드에서 쿼리스트링으로 전달 받은 값을 통해 데이터 가공 가능
+
+10. JS - append 와 appendChild의 차이 
+ - 
+
+11. function test() 와 const test = () => {} 의 차이
+ - 
+
+12. url 뜻 : 
+
+13. 저장경로 명시할 때 '\\' 와 '/' 
+
+14. a 태그 download 속성 : 
+
+
+
+
+

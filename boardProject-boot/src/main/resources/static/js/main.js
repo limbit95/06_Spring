@@ -79,3 +79,170 @@ if(loginForm != null){
         }
     });
 }
+
+
+// ==================================================================================
+
+// 빠른 로그인 기능 
+
+// 강사님 코드
+const quickLoginBtns = document.querySelectorAll(".quick-login");
+
+quickLoginBtns.forEach( (item, index) => {
+    // item : 현재 반복 시 꺼내온 객체
+    // index : 현재 반복 중인 인덱스
+    
+    // quickLoginBtns 요소인 button 태그 하나씩 꺼내서 이벤트 리스너 추가
+    item.addEventListener("click", () => {
+        const email = item.innerText;  // 버튼에 작성된 이메일 얻어오기
+
+        location.href = "/member/quickLogin?memberEmail=" + email;
+    });
+});
+
+
+// 내 코드
+const quickLogin = document.querySelector("#quickLogin");
+
+if(quickLogin != null){
+    quickLogin.addEventListener("click", () => {
+        fetch("member/quickLogin?memberEmail=" + quickLogin.innerText)
+        .then(resp => resp.text())
+        .then(result => {
+        });
+    });
+}
+
+// ==================================================================================
+
+// 회원 목록 조회(비동기)
+const selectMemberListBtn = document.querySelector("#selectMemberList");
+const memberList = document.querySelector("#memberList");
+
+const createTd = (text) => {
+    const td = document.createElement("td");
+    td.innerText = text;
+    return td;
+};
+
+const selectMemberList = () => {
+    fetch("member/selectMemberList")
+    .then(resp => resp.text())
+    .then(result => {
+        const list = JSON.parse(result);
+
+        memberList.innerHTML = "";
+
+        if(list.length === 0){
+            memberList.innerHTML = "<h1>등록된 회원이 없습니다</h1>";
+        } else {
+            
+            list.forEach( (member, index) => {
+
+                // 강사님 코드
+                const keyList = ['memberNo', 'memberEmail', 'memberNickname', 'memberDelFl'];
+                const tr = document.createElement("tr");
+                keyList.forEach( key => tr.append( createTd(member[key]) )); 
+                memberList.append(tr);
+
+                // 내코드
+                // const memberNo = document.createElement("td");
+                // const memberEmail = document.createElement("td");
+                // const memberNickname = document.createElement("td");
+                // const memberDelFl = document.createElement("td");
+                
+                // memberNo.textContent = member.memberNo;
+                // memberEmail.textContent = member.memberEmail;
+                // memberNickname.textContent = member.memberNickname;
+                // memberDelFl.textContent = member.memberDelFl;
+
+                // const tr = document.createElement("tr"); 
+    
+                // tr.append(memberNo);
+                // tr.append(memberEmail);
+                // tr.append(memberNickname);
+                // tr.append(memberDelFl);
+
+                // memberList.append(tr);
+            });
+            
+        }
+    })
+};
+
+selectMemberListBtn.addEventListener("click", () => {
+    selectMemberList();
+});
+
+// ==================================================================================
+
+// 특정 회원 비밀번호 초기화(Ajax)
+const resetMemberNo = document.querySelector("#resetMemberNo");
+const resetPw = document.querySelector("#resetPw");
+
+// 초기화 기능
+resetPw.addEventListener("click", () => {
+    const inputNo = resetMemberNo.value;
+
+    if(inputNo.trim().length === 0){
+        alert("회원번호를 입력해주세요");
+        resetMemberNo.focus();
+        return;
+    }
+
+    fetch("/member/resetPw?memberNo=", {
+        method : "PUT",
+        headers : {"Content-Type" : "application/json"},
+        body : inputNo
+    })
+    .then(resp => resp.text())
+    .then(result => {
+        if(result > 0) {
+            alert("초기화 성공");
+        } else {
+            alert("해당 회원이 존재하지 않습니다");
+        }
+
+        resetMemberNo.focus();
+        resetMemberNo.value = "";
+    });
+});
+
+// ==================================================================================
+
+// 특정 회원(회원번호) 탈퇴 복구 (Ajax)
+const restorationMemberNo = document.querySelector("#restorationMemberNo");
+const reestorationBtn = document.querySelector("#reestorationBtn");
+
+// 공백 입력 제한
+restorationMemberNo.addEventListener("input", e => {
+    const inputMemberNo = restorationMemberNo.value;
+
+    if(inputMemberNo.trim().length === 0){
+        restorationMemberNo.value = "";
+        return;
+    }
+});
+
+// 탈퇴 복구 기능
+reestorationBtn.addEventListener("click", () => {
+    const inputMemberNo = restorationMemberNo.value;
+
+    if(inputMemberNo.trim().length === 0){
+        alert("회원번호를 입력해주세요");
+        return;
+    }
+
+    fetch("/member/restorationMember?memberNo=" + inputMemberNo)
+    .then(resp => resp.text())
+    .then(result => {
+        if(result > 0) {
+            alert("탈퇴 복구 성공");
+            selectMemberList();
+        } else {
+            alert("존재 하지 않는 회원번호입니다");
+        }
+    });
+
+    restorationMemberNo.value = "";
+});

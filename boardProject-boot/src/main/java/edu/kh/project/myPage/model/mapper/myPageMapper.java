@@ -37,7 +37,7 @@ public interface myPageMapper {
 	 * @param inputMember
 	 * @return
 	 */
-	int checkNickname(String inputMember);
+	int checkNickname(Member inputMember);
 
 	
 	

@@ -2,8 +2,8 @@
   1) 주로 클래스명 위에 명시 -> 공통되는 값을 작성
   2) ex : 클래스명 위에 @RequestMapping("member") 
 	  해당 클래스 내부의 메서드명 위에 
-	  @GetMapping("login")  ==  /member/login
-	  @GetMapping("logou")  ==  /member/logout
+	  @GetMapping("login") == /member/login
+	  @GetMapping("logout") == /member/logout
 
 - HttpServletRequest : 메서드의 매개변수에 작성
   1) public String test(HttpServletRequest req)
@@ -43,7 +43,7 @@
      Controller 메서드 매개변수 담는 공간에 @RequestBody int memberNo 라 작성하면
      비동기 요청으로 보낸 데이터를 전달받을 수 있음
 
-- HttpMessageConverter
+- HttpMessageConverter (JSON Array(문자열)로 변경해주는 객체)
   1) Spring에서 비동기 통신시 아래 두 가지를 알맞은 형태로 가공(변환)해주는 객체
     (1) 전달되는 데이터의 자료형
     (2) 응답하는 데이터의 자료형
@@ -59,7 +59,10 @@
   - Java에서 응답받은 JSON 데이터를 JS에서 다룰 때
     (1) Java에서 응답받은 데이터 then(result(자바 객체)를) JS에서 사용할 때 const memberList = JSON.parse(result) 로 작성 가능
         -> JSON.parse(JSON 데이터) : String 형태의 JSON 데이터를 JS Object 타입으로 변환
-
+    (2) 첫 번째 then(response => response.json()) 으로도 변환 가능 이후 두 번째 then에서 받는 result는 따로 JSON.parse() 할 필요 없음
+    (3) 즉, response.json() == JSON.parse(result) 같은 기능임
+        - response.json()는 첫 번째 then에서 사용
+	- JSON.parse(result)는 두 번째 then에서 사용
 
 
 
