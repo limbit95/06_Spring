@@ -5,17 +5,17 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 반대로 strList2는 배열 안의 값은 비어있지만 할당값은 null이 아니기 때문에 반대로 if(strList2 == null){} 라는 조건식을 달 경우 해당 조건문 안으로 들어가지 못하며 if(strList2.isEmpty()){} 조건식을 달아야 해당 조건문 안으로 들어올 수 있다
 
 2. JS (innerText와 value의 차이)
-- input 과 같이 값을 입력할 수 있는 태그에서는 value를 통해 값을 가져올 수 있고
-- innerText는 html의 div, span, h1과 같은 태그 사이에 작성된 텍스트를 뜻함
+ - input 과 같이 값을 입력할 수 있는 태그에서는 value를 통해 값을 가져올 수 있고
+ - innerText는 html의 div, span, h1과 같은 태그 사이에 작성된 텍스트를 뜻함
 
 3. dataset
-- value 값을 지정할 수 없는 div, span, h와 같은 태그에 값을 지정하기 위해 사용하는 속성
-- 태그에 직접 data-test="test" 이런식으로 삽입하여 사용가능하지만 js 내에서 우회하여 속성 추가도 가능
-- js에서 html의 태그 요소를 얻어와 const 변수명 에 지정한 후 해당 변수명.setAttribute("data-test", "값"); 로도 속성 삽입 가능하다
-- 참고로 data- 이후의 지정명이 속성값 이름으로 지정되는 것이며 data- 이후에 나오는 - 하이픈은 js에서 인식할 수 없기때문에 - 뒤에 붙은 문자는 대문자 즉 카멜표기법과 같이 변형이 된다
-- ex) data-user-name == userName
-- thymeleaf를 통해 값 지정 가능 : <button th:data-member-no="${Member.memberNo}"></button>
-- data-* 속성 추가 후 JS에서 해당 속성 값 다른 변수에 값 대입할 때 todoList-boot 프로젝트 내 ajax-main.js 파일에서 449번줄 코드 참고
+ - value 값을 지정할 수 없는 div, span, h와 같은 태그에 값을 지정하기 위해 사용하는 속성
+ - 태그에 직접 data-test="test" 이런식으로 삽입하여 사용가능하지만 js 내에서 우회하여 속성 추가도 가능
+ - js에서 html의 태그 요소를 얻어와 const 변수명 에 지정한 후 해당 변수명.setAttribute("data-test", "값"); 로도 속성 삽입 가능하다
+ - 참고로 data- 이후의 지정명이 속성값 이름으로 지정되는 것이며 data- 이후에 나오는 - 하이픈은 js에서 인식할 수 없기때문에 - 뒤에 붙은 문자는 대문자 즉 카멜표기법과 같이 변형이 된다
+ - ex) data-user-name == userName
+ - thymeleaf를 통해 값 지정 가능 : <button th:data-member-no="${Member.memberNo}"></button>
+ - data-* 속성 추가 후 JS에서 해당 속성 값 다른 변수에 값 대입할 때 todoList-boot 프로젝트 내 ajax-main.js 파일에서 449번줄 코드 참고
 
 4. 평문, 암호화
 
@@ -26,18 +26,18 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 클라이언트가 서버로 요청 보냈을 때 서버 측에서 고유한 세션ID를 만듬(이 세션ID를 클라이언트 측에 보내주기도 함)
 
 7. JSON 변환 
-- JSON.parse(JSON 데이터) : String 형태의 JSON 데이터를 JS Object 타입으로 변환
-- JSON.stringify(JS Object) : JS Object 타입을 String 형태의 JSON 데이터로 변환
+ - JSON.parse(JSON 데이터) : String 형태의 JSON 데이터를 JS Object 타입으로 변환
+ - JSON.stringify(JS Object) : JS Object 타입을 String 형태의 JSON 데이터로 변환
 
 8. JS - querySelector 와 querySelectorAll 의 차이
  - querySelector : 하나의 요소만 얻어옴, 속성 값이 갖은 요소가 있다면 코드줄 기준 가장 먼저 해석되는 첫 번째 태그의 요소를 얻어옴
-   - ex) querySelector(".test"); 작성했을 때 class="test" 속성을 갖고 있는 태그가 
+    - ex) querySelector(".test"); 작성했을 때 class="test" 속성을 갖고 있는 태그가 
  	 <h3 class="test"></h3>
  	 <h4 class="test"></h4>
 	 두 개일 경우 <h3> 태그의 요소만 얻어옴
  - querySelectorAll : 같은 속성 값을 갖고 있는 모든 태그의 요소를 List 형태로 담아온다
-   - 얻어온 이 요소를 사용할 때 foreach( (item, index) => {} ) 을 통해서 하나씩 꺼내서 사용해야한다
-   - 통째로 사용 불가능(특히 addEventListener 사용시)
+    - 얻어온 이 요소를 사용할 때 foreach( (item, index) => {} ) 을 통해서 하나씩 꺼내서 사용해야한다
+    - 통째로 사용 불가능(특히 addEventListener 사용시)
 
 9. JS - location.href
  - Get 요청 방식임
@@ -45,17 +45,17 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 
 10. JS - append 와 appendChild의 차이 
  - append
-   1) 노드 객체, 문자열 추가 가능
-   2) 한 번에 2개 이상의 자식 노드 추가 가능
-   3) return 값 반환 안함
+    1) 노드 객체, 문자열 추가 가능
+    2) 한 번에 2개 이상의 자식 노드 추가 가능
+    3) return 값 반환 안함
  - appendChild
-   1) 노드 객체만 추가 가능 (문자열 안됨X)
-   2) 자식 노드 1개만 추가 가능 (2개 이상 X)
-   3) return 값 반환함
+    1) 노드 객체만 추가 가능 (문자열 안됨X)
+    2) 자식 노드 1개만 추가 가능 (2개 이상 X)
+    3) return 값 반환함
 
 11. function test() 와 const test = () => {} 의 차이 (https://kimbangg.tistory.com/107)
  - const = () => {} : block 내부에서만 구현 가능한 범위를 가지고 있음 (다시 선언 될 수 없음)
-   1) 함수를 작성했을 때 해당 함수를 호출할 때 작성한 코드 이후(밑줄)에 선언해야 호출됨
+    1) 함수를 작성했을 때 해당 함수를 호출할 때 작성한 코드 이후(밑줄)에 선언해야 호출됨
  - function() : hoisting 허용 -> 작성된 함수 윗줄에 선언하여도 호출이 가능
 
 12. JS - hoisting : 함수 안에 있는 선언들을 모두 끌어올려서 해당 함수 유효 범위의 최상단에 선언하는 것 (https://gmlwjd9405.github.io/2019/04/22/javascript-hoisting.html)
@@ -65,9 +65,17 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
 14. 저장경로 명시할 때 \\ == /
 
 15. a 태그 download 속성 : href에 지정된 파일을 다운로드 해주는 기능
-  - 일반 이미지, 엑셀 템플릿 등 고정된 것들에 한해서만 사용하기에 좋음
+ - 일반 이미지, 엑셀 템플릿 등 고정된 것들에 한해서만 사용하기에 좋음
 
+16. Exception 범위 : CheckedException / UnCheckedException
+ - CheckedException 
+    1) 
+ - UnCheckedException
+    1) 
 
+17. 절대 경로 / 상대 경로
+ - 절대 경로 : 주소의 모든 부분을 말함
+ - 상대 경로 : 
 
 
 
