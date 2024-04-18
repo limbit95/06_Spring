@@ -77,5 +77,18 @@ strList1은 참조형 변수명만 선언하고 그 공간 안에 객체를 할�
  - 절대 경로 : 주소의 모든 부분을 말함
  - 상대 경로 : 
 
+18. MimeMessageHelper.addInline : https://m.cafe.daum.net/ITVillage/PkLT/3
+
+19 SpringTemplateEngine : html의 코드를 문자열로 해석해주는 라이브러리 -> SpringTemplateEngine.process(classpath + "적용하고자하는html파일 경로와 파일이름까지, Context 객체)
+ - 추가로 같이 쓰면 좋은 것 : Context (org.thymeleaf.Context) Context.setVariable("key", value) 식으로 html에서 thymeleaf가 적용된 html에서 사용할 값 추가 가능
+
+
+
+
+
+
+
+
+
 
 

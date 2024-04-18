@@ -29,7 +29,13 @@
  - 파일 업로드 -> 메모리에 올라감(지정한 파일크기 내 일 경우) -> 파일 크기가 50MB(지정 설정한 파일 크기) 초과 시 
     -> 파일 임시 저장 경로에 저장(config.properties에서 spring.servlet.multipart.location=설정한 경로)
 
+6. Filter : 클라이언트가 서버에 요청하기 전에 동작 (Servlet 스팩에서 제공)
+ - 요청, 응답 시 걸러내거나 추가할 수 있는 객체
+ - 요청 주소를 필터가 가로챌 수 있음
+   ex) /myPage/* 주소 요청을 가로챔 -> loginMember 세션이 없으면 해당 주소 요청을 할 수 없게끔 만든다
 
+7. interceptor : Handler Mapping, Controller, View Resolver와 서버 사이에서 이루어짐 (Spring에서 제공하는 기능)
+ - 가로채는 것 + 추가
 
 
 

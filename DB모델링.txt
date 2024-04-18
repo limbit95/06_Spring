@@ -1,0 +1,18 @@
+1. settings
+ - type, allow null, default value, comment 체크 (체크 표시는 검은색 모양이 체크임)
+ - 테이블 생성 후 - 주황색 : PRIMARY KEY / 파란색 : 일반 컬럼
+ - 하단 Export 클릭시 SQL Preview 클릭하면 SQL문을 미리 볼 수 있음 - 상단에 MySQL을 Oracle로 변경 - 바로 아래 옵션 중 ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT 체크해주기
+ - 
+
+2. NVARCHAR2
+ - UTF-8 
+   1) 영어, 숫자, 기본 특수문자 : 1Byte
+   2) 나머지 3Byte
+ - UTF-16 (Java의 char)
+   1) 모든 글자 2Byte
+ - NVARCHAR2(10)
+   1) 10글자 모두 영어 == 10Byte
+   2) 10글자 모두 한글 == 30Byte
+   3) 5글자 영어, 5글자 한글 == 20Byte
+- DB 이관 시 인코딩 문제, 크기 단위 문제 해결을 위해서
+
