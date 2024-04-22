@@ -1,0 +1,150 @@
+오늘 배운 것 : BoardTypeInterceptor 클래스 만들기, InterceptorConfig 클래스 만들기, Pagination 객체 만들기
+
+0. Interceptor란?
+ - 
+
+1. interceptor 만들기
+ - 프로젝트경로.common.interceptor 패키지 만들고 그 안에 BoardTypeInterceptor 이라는 이름의 클래스 생성
+ - BoardTypeInterceptor 클래스 안에서 HandlerInterceptor 인터페이스 implements
+ - HandlerInterceptor 특징 : 인터페이스의 특징인 오버라이딩을 강제하지 않고 있음 (우리가 원하는 기능만 알아서 오버라이딩 해서 사용할 수 있음)
+ - alt + shift + s -> Override/implement Methods 클릭 후 오버라이딩 가능한 목록 전부 체크 후 생성
+
+2. 오버라이딩 메서드 (preHandle, postHandle, afterCompletion)
+ - preHandle(전처리) 메서드 사용
+ - preHandle 메서드 안에 application scope 객체 얻어오기 : ServletContext 객체명 = request.getServletContext();
+ - application scope 사용 이유 : 
+   1) 모든 클라이언트가 공용으로 사용하는 것을 만들기 위해서
+   2) 서버 종료 시 까지 유지되는 Servlet 내장 객체이기에 
+
+3. Controller 에게 보낸 요청 가로채어 service 로 바로 전달
+ - Interceptor 이유 : 기존에 Dispatcher Servlet 에 들어온 요청을 Controller에 전달하려는 것을 가로챈 것이기에 다시 Controller에 전달하는 것은 이치에 맞지 않음
+ - BoardTypeInterceptor 클래스 안에 BoardService 객체 생성 후 @Autowired를 통해 의존성 주입
+ - @requiredargsconstructor를 사용하지 않고 @Autowired를 통해 의존성 주입하는 이유
+   - @requiredargsconstructor 어노테이션 사용 시 기본생성자 생성 불가, 매개변수 생성자만 생성 가능한데 기본 생성자를 통해 다른 기능 구현을 해야 하기 때문에 의존성 주입은 @Autowire로 대신한다
+
+4. 생성한 service를 통해 DB에 있는 BOARD_TYPE 테이블의 데이터를 List<Map<String, Object>> 형태로 얻어오기
+ - board-mapper.xml 에서 List<Map<String, Object>> 형태로 반환 받을 때 resultType="List<Map<String, Object>>" 으로 지정하지 않아도 되는 이유
+   1) 전 mybatis 기능에서 resultType 선언 필수였으나 이후 미작성 할 수 있는 조건이 추가됨
+   2) mapper(BoardMapper) 메서드의 반환형이 별칭으로 등록되어 있을 때는 resultType 생략가능
+
+5. 프로젝트경로.common 패키지에 InterceptorConfig 클래스 생성
+ - Interceptor를 할 객체(BoardTypeInterceptor)는 생성했지만 어떤 요청을 가로챌지를 설정할 클래스도 생성해야 한다
+ - InterceptorConfig 클래스 안에 BoardTypeInterceptor 클래스 Bean으로 등록
+     @Bean
+   - public BoardTypeInterceptor boardTypeInterceptor() {
+	return new BoardTypeInterceptor();
+     }
+
+6. 가로챌 주소와 가로채지 않을 주소 설정하기
+ - InterceptorConfig implements WebMvcConfigurer 
+ - WebMvcConfigurer : ??? 개념 
+ - ctrl + space -> addInterceptors 메서드 오버라이딩
+ - addInterceptors : 동작할 Interceptor 객체를 추가하는 메서드
+ - registry.addInterceptor(boardTypeInterceptor()) : Bean으로 등록된 BoardTypeInterceptor() 얻어와서 매개변수로 전달
+ - 위에 구문에 이어서 .addPathPatterns("/**") : 가로챌 요청 주소 지정 (/** : / 이하 모든 요청 주소)
+ - 위에 구문에 이어서 .excludePathPatterns("/css/**", "/js/**", "/images/**", "/favicon.ico");   : 가로채지 않을 주소 지정 
+
+7. header.html에 DB에서 가져온 boardTypeList 데이터 thymeleaf 사용하여 집어넣기
+<th:block th:each="boardType : ${application.boardTypeList}">
+	<li>
+		<a th:text="${boardType.boardName}"
+		    th:href="@{/board/{boardCode}(boardCode = ${boardType.boardCode})}">게시판이름
+		</a>
+	</li>
+</th:block>
+
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+게시판 종류별 게시글 목록 조회
+
+1. BoardController
+- boardCode = 1~3 값 하나의 메서드로 받아서 처리하기
+	@GetMapping("{boardCode:[0-9]+}")
+	public String selectBoardList(@PathVariable("boardCode") int boardCode,
+				 @RequestParam(value="cp", required=false, defaultValue="1") int cp,
+				 Model model) {
+	
+		// 조회 서비스 호출 후 결과 반환
+		// "pagination", "boardList" 값 담아올 예정이기에 Map<String, Object> 형으로 선언
+		Map<String, Object> map = service.selectBoardList(boardCode, cp);
+		
+		return "/board/boardList"; // boardList.html 로 forward
+	}
+ - {boardCode:[0-9]+}
+   1) [0-9] : 한 칸에 0-9 사이 숫자 입력 가능
+   2) + : 하나 이상(한 글자 이상)
+   3) [0-9]+ : 모든 숫자
+ - @RequestParam(value="cp", required=false, defaultValue="1") int cp : 
+   1) 지정한 개수만큼 묶어서 게시글 목록을 보여줄 때 게시글을 나눌 페이지 값을 담을 변수
+   2) 값이 넘어오지 않을 때 defaultValue인 1을 담아 1페이지가 보이게 함
+
+2. BoardServiceImple
+ - public Map<String, Object> selectBoardList(int boardCode, int cp)
+   1) 지정된 게시판(boardCode)에서 삭제되지 않은 게시글 수 조회하기
+   2) 1번의 결과 + cp를 이용해서 Pagination 객체 생성
+      - Pagination 객체 : 게시글 목록 구성에 필요한 값을 저장한 객체 (직접 설계 -> board.model.dto 패키지에 Pagination 클래스 생성)
+         1) 필드 선언 : 
+		private int currentPage;		// 현재 페이지 번호
+		private int listCount;			// 전체 게시글 수
+	
+		private int limit = 10;			// 한 페이지 목록에 보여지는 게시글 수
+		private int pageSize = 10;		// 보여질 페이지 번호 개수
+	
+		private int maxPage;			// 마지막 페이지 번호
+		private int startPage;			// 보여지는 맨 앞 페이지 번호
+		private int endPage;			// 보여지는 맨 뒤 페이지 번호
+	
+		private int prevPage;			// 이전 페이지 모음의 마지막 번호
+		private int nextPage;			// 다음 페이지 모음의 시작 번호
+         2) 기본생성자 X : 만들면 따로 만든 계산 메서드가 작동안 함
+         3) 생성자 2개 : (currentPage, listCount), (currentPage, listCount, limit, pageSize)
+         4) getter & setter : 
+	getter : currentPage, listCount, limit, pageSize, maxPage, startPage, endPage, prevPage, nextPage
+	seeter : currentPage, listCount, limit, pageSize
+         5) toString
+         6) private void calculate()
+	- maxPage = (int)Math.ceil( (double)listCount / limit );
+	- startPage = (currentPage - 1) / pageSize * pageSize + 1;
+	- endPage = pageSize - 1 + startPage;
+	- if(endPage > maxPage) endPage = maxPage;
+	- if(currentPage < pageSize) {
+		prevPage = 1;
+	  } else { // 그 외 경우
+		prevPage = startPage - 1;
+	  }
+	- if(currentPage == maxPage) {
+		nextPage = maxPage;
+	  } else { // 그 외 경우
+		nextPage = endPage + 1;
+	  }
+      - Pagination pagination = new Pagination(cp, listCount); 
+   3) 특정 게시판의 지정된 페이지 목록 조회
+      - int limit = pagination.getLimit();
+      - int offset = (cp - 1) * limit;
+      - RowBounds rowBounds = new RowBounds(offset, limit);
+      - List<Board> boardList = mapper.selectBoardList(boardCode, rowBounds);
+   4) 목록 조회 결과 + Pagination 객체를 Map으로 묵음
+      - Map<String, Object> map = new HashMap<String, Object>();
+      - map.put("pagination", pagination);
+      - map.put("boardList", boardList);
+   5) 결과 반환 : return map;
+
+3. BoardController - 코드 추가
+ - model.addAttribute("pagination", map.get("pagination"));
+ - model.addAttribute("boardList", map.get("boardList"));
+
+4. boardList.html 
+ - 주의할 점 : application.boardTypeList.boardCode 와 특정 게시판을 가리키는 boardCode는 다름
+   1) application에 올라와 있는 boardCode는 Interceptor 객체를 통해 게시판 종류를 구분짓는 boardCode들이 들어있고 (다수 값)
+   2) boardCode는 request scope 으로 특정 게시판으로 이동할 때 url을 통해 전달한 boardCode임으로 현재 게시판이 어떤 게시판이냐에 따라서
+      boardCode는 값이 다름 (단일 값) 
+ - 세세한 코드 작성은 수업 진도 나간 boardList.html 파일 참고
+ - 
+
+
+
+
+
+
+

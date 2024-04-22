@@ -22,7 +22,7 @@ public interface BoardMapper {
 	 */
 	int getListCount(int boardCode);
 
-	/** 특정 게시팔의 지정된 페이지 목록 조회
+	/** 특정 게시판의 지정된 페이지 목록 조회
 	 * @param boardCode
 	 * @param rowBounds
 	 * @return boardList
