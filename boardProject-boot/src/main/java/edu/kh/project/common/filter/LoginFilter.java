@@ -21,7 +21,7 @@ public class LoginFilter implements Filter{
 
 	// 필터 동작을 정의하는 메서드
 	@Override
-	public void doFilter(ServletRequest request, 
+	public void doFilter(ServletRequest request,
 						 ServletResponse response, 
 						 FilterChain chain)	throws IOException, ServletException {
 		
