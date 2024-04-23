@@ -1,5 +1,7 @@
 package edu.kh.project.board.model.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,8 +25,8 @@ public class Board {
 	private String boardUpdateDate;
 	private int readCount;
 	private String boardDelFl;
-	private String memberNo;
-	private String boardCode;
+	private int memberNo;
+	private int boardCode;
 	
 	// MEMBER 테이블 JOIN
 	private String memberNickname;
@@ -41,7 +43,9 @@ public class Board {
 	
 	// --- 추가 예정 ---
 	// 특정 게시글의 이미지 목록
+	private List<BoardImg> imageList;
 	
 	// 특정 게시글의 작성된 댓글 목록
+	private List<Comment> commentList;
 	
 }
