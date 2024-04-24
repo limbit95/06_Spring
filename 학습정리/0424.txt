@@ -1,0 +1,219 @@
+게시글 좋아요
+
+1. DB에서 좋아요 샘플 데이터 insert
+INSERT INTO "BOARD_LIKE"
+VALUES(2, 1998); -- 1번 회원이 1998번 글에 좋아요를 클릭함
+- 첫번째 값 : 좋아요 누른 회원 번호
+- 두번째 값 : 좋아요 누른 게시글
+
+2. boardController
+ - 특정 회원이 특정 게시글에 좋아요 눌렀는지 조회하려는 SQL에 보낼 회원번호를 map에 추가
+ - if(loginMember != null) { map.put("memberNo", loginMember.getMemberNo()); }
+
+3. board-mapper.xml
+ - selectOne 쿼리문에 쿼리 추가
+ - (SELECT COUNT(*) FROM "BOARD_LIKE"
+    WHERE MEMBER_NO = #{memberNo}
+    AND BOARD_NO = #{boardNo}) LIKE_CHECK
+
+4. boardDetail.thml
+ - id='boardLike" 태그에 th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular" 추가
+
+5. 좋아요 클릭 시 체크/해제 + 게시글 좋아요 수 업데이트
+
+5-1. boardDetail.html 
+ - boardDetail.html 에 연결할 boardDetail.js 파일 생성
+ - boardDetail.js 에서 준비할 요소
+   1) 로그인한 회원 번호 (session에서 얻어와야 함)
+   2) 현재 게시글 번호
+   3) 좋아요 여부
+ - 서버에 올라가 있는 데이터를 html에서는 thymeleaf 를 통해 얻어올 수 있지만 js는 가져올 방법이 없기에 
+   <script th:inline="javascript"></script> 태그 안에서 네츄럴 템플릿을 이용해 서버에 있는 값을 가져와 js의 전역 변수로 저장해야 한다
+ - <script th:inline="javascript"></script> 전역 변수 저장
+   1) const loginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인 회원 번호";
+   2) const boardNo = /*[[${board.boardNo}]]*/ "게시글 번호";
+   3) let likeCheck = /*[[${board.likeCheck}]]*/ "좋아요 여부";
+
+5-2. boardDetail.js
+document.querySelector("#boardLike").addEventListener("click", e => {
+    // 2. 로그인 상태가 아닌 경우 동작 X 
+    console.log(loginMemberNo);
+    if(loginMemberNo == null){
+        alert("로그인 후 이용해 주세요")
+        return;
+    }
+
+    // 3. 준비된 3개의 변수를 객체로 저장 (JSON 변환 예정)
+    const obj = {
+        "memberNo"  : loginMemberNo,
+        "boardNo"   : boardNo,
+        "likeCheck" : likeCheck
+    }
+
+    // 4. 좋아요 INSERT/DELETE 비동기 요청
+    fetch("/board/like", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(obj)
+    })
+    .then(resp => resp.text())
+    .then(count => {
+        if(count == -1){
+            console.log("좋아요 처리 실패");
+            return;
+        }
+
+        // 5. likeCheck 값 0 <-> 1
+        // 클릭 될 때 마다 INSERT/DELETE 동작을 번갈아 가면서 하게끔
+        likeCheck = likeCheck == 0 ? 1 : 0;
+
+        // 6. 하트를 채웠다 <-> 비웠다 변경
+        e.target.classList.toggle("fa-regular");
+        e.target.classList.toggle("fa-solid");
+
+        // 7. 게시글 좋아요 수 수정
+        e.target.nextElementSibling.innerText = count;
+    })
+});
+
+5-3. BoardController
+@ResponseBody
+@PostMapping("like")
+public int boardLike(@RequestBody Map<String, Integer> map) {
+	return service.boardLike(map);
+}
+
+5-4. BoardServiceImpl
+@Override
+public int boardLike(Map<String, Integer> map) {
+	int result = 0;
+	
+	// 1. 좋아요가 체크된 상태인 경우 (likeCheck == 1)
+	// -> BOARD_LIKE 테이블에 DELETE
+	if(map.get("likeCheck") == 1) {
+		result = mapper.deleteBoardLike(map);
+	} else {
+		// 2. 좋아요가 해제된 상태인 경우 (likeCheck == 0)
+		// -> BOARD_LIKE 테이블에 INSERT
+		result = mapper.insertBoardLike(map);
+	}
+	
+	// 3. 다시 해당 게시글의 좋아요 개수 조회해서 반환
+	if(result > 0) {
+		return mapper.selectLikeCount(map.get("boardNo"));
+	}
+	
+	return -1;
+}
+
+5-5. board-mapper.xml
+<select id="selectLikeCount">
+	SELECT COUNT(*) FROM "BOARD_LIKE"
+	WHERE BOARD_NO = #{boardNo}
+</select>
+
+
+게시글 조회수 증가
+
+0. 방법
+ - 조회할 때 마다 증가 (DB, 서버 부하)
+ - DB에 누가 어떤 글을 조회했는가, 일정 기간 단위로 확인해서 증가
+ - local/session 스토리지 (클라이언트) -> JS 사용가능, 서버 사용 X
+ - 쿠키를 이용한 조회수 증가 (서버 <-> 클라이언트, 보안에 취약 또는 조작 가능)
+ - In Memory DB (redis) -> 쿠팡에서 사용함 (K:V) 
+
+4번 방법 사용
+
+1. BoardController - boardDetail 메서드 - 조회 결과가 있는 경우 else 블럭 안에 코드 추가
+if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
+	// 요청에 담겨있는 모든 쿠키 얻어오기
+	Cookie[] cookies = req.getCookies();
+	
+	Cookie c = null;
+	
+	for(Cookie temp : cookies) {
+		// 요청에 담긴 쿠키에 "readBoardNo" 가 존재할 경우
+		if(temp.getName().equals("readBoardNo")) {
+			c = temp;
+			break;
+		}
+	}
+	
+	int result = 0; // 조회수 증가 결과를 저장할 변수
+	
+	// "readBoardNo" 가 쿠키에 없을 경우
+	if(c == null) {
+		// 새 쿠키 생성 ("readBoardNo", [게시글번호])
+		c = new Cookie("readBoardNo", "[" + boardNo + "]");
+		result = service.updateReadCount(boardNo);
+	} else {
+		// "readBoardNo" 가 쿠키에 있을 때
+		// "readBoardNo" : [2][30][400][2000][4000]
+	
+		// 현재 글을 처음 읽은 경우
+		if(c.getValue().indexOf("[" + boardNo + "]") == -1) {
+			// 해당 글 번호를 쿠키에 누적 + 서비스 호출
+			c.setValue(c.getValue() + "[" + boardNo + "]");
+			result = service.updateReadCount(boardNo);
+		}
+	}
+	
+	// 조회 수 증가 성공 / 조회 성공
+	if(result > 0) {
+		// 먼저 조회된 board 의 readCount 값을
+		// result 값으로 변환
+		board.setReadCount(result);
+		
+		// 쿠키 적용 경로
+		c.setPath("/"); // "/ 이하 경로 요청 시 쿠키 서버로 전달
+		
+		// 쿠키 수명 지정
+		// 현재 시간을 얻어오기
+		LocalDateTime now = LocalDateTime.now();
+		
+		// 다음날 자정
+		LocalDateTime nextDayMidnight = now.plusDays(1).withHour(0).withMinute(0).withSecond(0).withNano(0);
+		
+		// 다음날 자정까지 남은 시간 계산 (초단위)
+		long secondsUntilNextDay = Duration.between(now, nextDayMidnight).getSeconds();
+		
+		// 쿠키 수명 설정
+		c.setMaxAge((int)secondsUntilNextDay);
+		
+		resp.addCookie(c); // 응답 객체를 이용해서 클라이언트에게 전달
+	}
+}
+
+2. BoardServiceImpl - BoardController 의 boardDetail 메서드에서 호출한 service.updateReadCount(boardNo); 
+@Override
+public int updateReadCount(int boardNo) {
+	// 1. 조회 수 1 증가
+	int result = mapper.updateReadCount(boardNo);
+	
+	// 2. 현재 조회 수 조회
+	if(result > 0) {
+		return mapper.selectReadCount(boardNo);
+	} 
+	
+	// 실패한 경우 -1 반환
+	return -1;
+}
+
+3. board-mapper.xml
+<!-- 조회수 1 증가 -->
+<update id="updateReadCount">
+	UPDATE "BOARD" SET
+	READ_COUNT = READ_COUNT + 1
+	WHERE BOARD_NO = #{boardNo}
+</update>
+
+<!-- 조회수 조회 -->
+<select id="selectReadCount">
+	SELECT READ_COUNT FROM "BOARD"
+	WHERE BOARD_NO = #{boardNo}
+</select>
+
+
+
+
+
