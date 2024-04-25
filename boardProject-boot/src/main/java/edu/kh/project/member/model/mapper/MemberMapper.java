@@ -1,4 +1,4 @@
-package edu.kh.project.model.mapper;
+package edu.kh.project.member.model.mapper;
 
 import java.util.List;
 import java.util.Map;
