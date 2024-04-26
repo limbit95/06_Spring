@@ -52,3 +52,24 @@ document.querySelector("#boardLike").addEventListener("click", e => {
         e.target.nextElementSibling.innerText = count;
     })
 });
+
+
+// ------------------------------------------------------------------------------------------------
+
+// 게시글 수정 버튼
+
+const updateBtn = document.querySelector("#updateBtn");
+
+if(updateBtn != null){ // 수정 버튼 존재 시
+    updateBtn.addEventListener("click", () =>{
+        // GET 방식
+        // 현재 : /board/1/2001?cp=1
+        // 목표 : /editBoard/1/2001/update?cp=1
+
+        // location.pathname : 현재 머무르고 있는 주소 값 (쿼리스트링 제외)
+        // location.search : 현재 머무르고 있는 쿼리스트링 값
+        location.href = location.pathname.replace('board', 'editBoard')
+         + "/update"
+         + location.search;
+    });
+};
