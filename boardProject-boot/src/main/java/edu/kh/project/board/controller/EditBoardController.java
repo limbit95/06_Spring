@@ -45,7 +45,7 @@ public class EditBoardController {
 		return "board/boardWrite";
 	}
 	
-	/**
+	/** 게시글 작성
 	 * @param boardCode : 어떤 게시판에 작성할 글인지 구분하기 위한 요소
 	 * @param inputBoard : 입력된 값(게시글 제목과 내용) DTO에 세팅 (커맨드 객체)
 	 * @param loginMember : 로그인한 회원 번호 (누가 작성했는지 알기 위해)
@@ -200,5 +200,6 @@ public class EditBoardController {
 		
 		return "redirect:" + path;
 	}
+	
 	
 }

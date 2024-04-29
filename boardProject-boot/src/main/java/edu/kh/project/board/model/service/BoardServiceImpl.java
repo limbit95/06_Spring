@@ -117,6 +117,12 @@ public class BoardServiceImpl implements BoardService{
 		// 실패한 경우 -1 반환
 		return -1;
 	}
+
+	// 게시글 삭제
+	@Override
+	public int boardDelete(Map<String, Integer> map) {
+		return mapper.boardDelete(map);
+	}
 	
 	
 	

@@ -203,4 +203,32 @@ public class BoardController {
 		return service.boardLike(map);
 	}
 	
+	@GetMapping("{boardCode:[0-9]+}/{boardNo:[0-9]+}/delete")
+	public String boardDelete(@PathVariable("boardCode") int boardCode,
+						      @PathVariable("boardNo") int boardNo,
+						      @RequestParam("cp") int cp,
+						      RedirectAttributes ra) {
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("boardCode", boardCode);
+		map.put("boardNo", boardNo);
+		
+		int result = service.boardDelete(map);
+		
+		String message = null;
+		String path = null;
+		
+		if(result > 0) {
+			message = "게시글이 삭제 되었습니다";
+			path = "/board/" + boardCode;
+		} else {
+			message = "게시글 삭제 실패";
+			path = "/";
+		}
+		
+		ra.addFlashAttribute("message", message);
+		
+		return "redirect:" + path;
+	}
+	
 }

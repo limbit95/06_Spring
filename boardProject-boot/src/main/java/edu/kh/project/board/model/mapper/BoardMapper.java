@@ -64,6 +64,12 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int selectReadCount(int boardNo);
+
+	/** 게시글 삭제
+	 * @param map
+	 * @return
+	 */
+	int boardDelete(Map<String, Integer> map);
 	
 	
 	

@@ -36,6 +36,11 @@ public interface BoardService {
 	 * @return
 	 */
 	int updateReadCount(int boardNo);
+
+	/** 게시글 삭제
+	 * @return
+	 */
+	int boardDelete(Map<String, Integer> map);
 	
 	
 	
