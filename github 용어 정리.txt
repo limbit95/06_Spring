@@ -16,6 +16,7 @@
 - git checkout -t origin/"브랜치명" : 원격저장소에 있는 branch를 로컬로 가져오면서 해당 branch로 이동
 
 4. Pull Requests
+
  - 코드 작성한 프로젝트 내 branch에 push 한 이후
  - github 해당 Repository에서 상단 Pull requests 클릭
  - 오른쪽에 new pull request 클릭

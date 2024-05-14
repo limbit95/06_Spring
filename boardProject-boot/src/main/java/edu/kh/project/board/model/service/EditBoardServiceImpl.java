@@ -42,7 +42,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 	
 	// 게시글 작성
 	@Override
-	public int boardInsert(Board inputBoard, List<MultipartFile> images) throws Exception{
+	public int boardInsert(Board inputBoard, List<MultipartFile> images) throws Exception {
 		// 1. 게시글 부분을 먼저
 		//    BOARD 테이블에 INSERT 하기
 		// -> INSERT 결과로 작성된 게시글 번호(생성된 시퀀스 번호) 반환 받기

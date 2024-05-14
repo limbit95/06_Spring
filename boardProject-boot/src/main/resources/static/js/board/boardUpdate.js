@@ -4,6 +4,8 @@
 const inputImageList = document.getElementsByClassName("inputImage"); // input 태그 5개
 const deleteImageList = document.getElementsByClassName("delete-image"); // x버튼 5개
 
+console.log(inputImageList[0]);
+
 // x버튼이 눌러져 삭제된 이미지의 순서를 저장
 // * Set : 중복 저장 X, 순서 유지 X
 const deleteOrder = new Set();
