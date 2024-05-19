@@ -4,9 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        .invite-container {
+            display: flex;
+            flex-direction: column;
+            border-radius: 30px; 
+            position: fixed;
+            border: 3px solid #076DF2; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.45), 0 6px 6px rgba(0,0,0,0.45);
+            background-color: white;
+            z-index: 1010;
+
+            margin: auto;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            width: 600px;
+            height: 800px;
+            padding: 30px;
+        }
+
+        .invite-list {
+            width: 540px;
+            height: 600px;
+            border-radius: 30px; 
+            border: 3px solid #076DF2; 
+            padding: 50px;
+        }
+
+        .btn-list {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            width: 540px;
+            height: 120px;
+            margin-top: 20px;
+        }
+
+        .btn-list > button {
+            width: 100px;
+            height: 80px;
+            font-size: 25px;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            border-radius: 30px; 
+            border: 3px solid #076DF2; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.45), 0 6px 6px rgba(0,0,0,0.45);
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color:cadetblue;
+        }
+
+        .btn-list > button:nth-child(2) {
+             margin-left: 80px;
+        }
+
+        table {
+            display: flex;
+            flex-direction: column;
+            width: 440px;
+            height: 500px;
+        }
+
+        th{
+            width: 440px;
+            height: 50px;
+            border: 2px solid #076DF2; 
+        }
+
+        td{
+            width: 440px;
+            height: 50px;
+            border: 2px solid #076DF2; 
+            text-align: center;
+        }
+
+
+    </style>
 </head>
 <body>
     엑셀 테스트 화면입니다
-    <h1 th:text="${test}"></h1>
+    <form action="/excel/upload" method="post" enctype="multipart/form-data" class="uplodaExcel">
+        <input type="file" name="excel" class="excelFile">
+        <br>
+        <button class="a">다음</button>
+    </form>
+    
+
+    <div th:if="${employeeList}" class="invite-container">
+        <div class="invite-list">
+            <table>
+                <tr>
+                    <th class="a">이름</th>
+                    <th>이메일</th>
+                </tr>
+
+                <tr th:each="employee : ${employeeList}" th:object="${employee}">
+                    <td th:text="*{empName} ?: 'null'">이름</td>
+                    <td th:text="*{empEmail} ?: 'null'">이메일</td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="btn-list">
+            <button class="invite-btn">초대</button>
+            <button class="cancel-btn">취소</button>
+        </div>
+    </div>
+    <div></div>
+    <div></div>
+
+
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    
+    <script th:inline="javascript">
+        const message =  /*[[${message}]]*/ "전달 받은 message";
+        const employeeList =  /*[[${employeeList}]]*/ "employeeList";
+        
+        if(message != null) alert(message);
+        </script>
+    <script src="/js/excel.js"></script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.kh.project.draganddrop.model.mapper.GroupRepository">
+	
+	<select id="findAll" resultType="Group">
+		SELECT * FROM USER_GROUP
+	</select>
+
+
+	<update id="changePosition">
+		UPDATE USER_GROUP SET parent_id = #{newParentId}
+		WHERE id = #{groupId}
+	</update>
+		
+</mapper>

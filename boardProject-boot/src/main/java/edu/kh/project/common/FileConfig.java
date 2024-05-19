@@ -49,6 +49,12 @@ public class FileConfig implements WebMvcConfigurer{
 	@Value("${my.board.resource-location}")
 	private String boardResourceLocation;
 	
+	// 엑셀 파일
+	@Value("${excel.resource-handler}")
+	private String excelResourceHandler;
+	@Value("${excel.resource-location}")
+	private String excelResourceLocation;
+	
 	
 	// 요청 주소에 따라
 	// 서버 컴퓨터의 어떤 경로에 접근할지 설정
@@ -71,6 +77,9 @@ public class FileConfig implements WebMvcConfigurer{
 		
 		registry.addResourceHandler(boardResourceHandler)
 		.addResourceLocations(boardResourceLocation);
+		
+		registry.addResourceHandler(excelResourceHandler)
+		.addResourceLocations(excelResourceLocation);
 	}
 	
 	// ------------------------- MultipartResolver 설정 -------------------------
