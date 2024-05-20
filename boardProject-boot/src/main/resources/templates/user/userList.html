@@ -4,29 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>구성원</title>
+
+    <style>
+
+        table {
+            border: 1px solid #076DF2;
+        }
+
+        th {
+            border: 1px solid #076DF2;
+        }
+        
+        td {
+            border: 1px solid #076DF2;
+        }
+
+    </style>
 </head>
 <body>
     
     <a href="/user/excel">구성원 일괄 추가</a>
 
+    <br>
+    <br>
+
     <div>
 
-        <ul th:if="${#lists.size(employeeList) == 0}">
-            <li >등록된 사원 정보가 없습니다.</li>
-        </ul>
-        <ul th:if="${#lists.size(employeeList) > 0}"
-            th:each="employee : ${employeeList}"
-            th:object="${employee}">
-            <li>
-                <p th:text="*{empNo} ?: 'null'">사번</p>
-                <p th:text="*{empName} ?: 'null'">이름</p>
-                <p th:text="*{empId} ?: 'null'">이메일</p>
-                <p th:text="*{empEmail} ?: 'null'">이메일</p>
-                <p th:text="*{empNickname} ?: 'null'">이메일</p>
-                <p th:text="*{empTel} ?: 'null'">이메일</p>
-                <p th:text="*{empBirth} ?: 'null'">이메일</p>
-            </li>
-        </ul>
+        <table>
+
+            <tr th:if="${#lists.size(employeeList) == 0}">
+                <th>등록된 사원 정보가 없습니다.</th>
+            </tr>
+
+            <tr>
+                <th>사번</th>
+                <th>이름</th>
+                <th>아이디</th>
+                <th>이메일</th>
+                <th>닉네임</th>
+                <th>번호</th>
+                <th>생년월일</th>
+            </tr>
+
+            <tr th:each="employee : ${employeeList}" th:object="${employee}">
+                <td th:text="*{empNo} ?: 'null'">사번</td>
+                <td th:text="*{empName} ?: 'null'">이름</td>
+                <td th:text="*{empId} ?: 'null'">아이디</td>
+                <td th:text="*{empEmail} ?: 'null'">이메일</td>
+                <td th:text="*{empNickname} ?: 'null'">닉네임</td>
+                <td th:text="*{empTel} ?: 'null'">번호</td>
+                <td th:text="*{empBirth} ?: 'null'">생년월일</td>
+            </tr>
+
+        </table>
 
     </div>
     

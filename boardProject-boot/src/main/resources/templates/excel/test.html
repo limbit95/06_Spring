@@ -28,13 +28,13 @@
             left: 0;
             right: 0;
 
-            width: 600px;
+            width: 700px;
             height: 800px;
             padding: 30px;
         }
 
         .invite-list {
-            width: 540px;
+            width: 640px;
             height: 600px;
             border-radius: 30px; 
             border: 3px solid #076DF2; 
@@ -45,7 +45,7 @@
             justify-content: center;
             align-items: center;
             display: flex;
-            width: 540px;
+            width: 640px;
             height: 120px;
             margin-top: 20px;
         }
@@ -61,7 +61,11 @@
             cursor: pointer;
         }
 
-        button:hover {
+        .invite-list > div > button {
+            cursor: pointer;
+        }
+
+        button:active {
             background-color:cadetblue;
         }
 
@@ -86,6 +90,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -104,11 +109,17 @@
         <button>다음</button>
     </form>
     
-
+    
     <div th:if="${excelList}" class="invite-container">
         <div class="invite-list">
+            <div style="display: flex; margin-bottom: 5px;">
+                <!-- <button class="entireBtn">전체선택</button> -->
+                <button class="deleteBtn">삭제</button>
+            </div>
+            
             <table>
                 <tr>
+                    <th><input type="checkbox" class="entire-checkbox"></th>
                     <th>사번</th>
                     <th>이름</th>
                     <th>아이디</th>
@@ -118,7 +129,8 @@
                     <th>생년월일</th>
                 </tr>
 
-                <tr th:each="employee : ${excelList}" th:object="${employee}">
+                <tr th:each="employee, i : ${excelList}" th:object="${employee}" class="employee-tr">
+                    <td><input type="checkbox" class="employeeCheckbox"></td>
                     <td th:text="*{empNo} ?: 'null'">사번</td>
                     <td th:text="*{empName} ?: 'null'">이름</td>
                     <td th:text="*{empId} ?: 'null'">이메일</td>

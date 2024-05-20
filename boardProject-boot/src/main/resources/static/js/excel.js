@@ -46,3 +46,58 @@ if(inviteBtn != null){
         });
     })
 };
+
+// const entireBtn = document.querySelector(".entireBtn");
+const entireCheckbox = document.querySelector(".entire-checkbox");
+const deleteBtn = document.querySelector(".deleteBtn");
+const employeeCheckbox = document.querySelectorAll(".employeeCheckbox");
+
+if(entireCheckbox != null){
+    entireCheckbox.addEventListener("input", e => {
+        if(entireCheckbox.checked == true){
+            employeeCheckbox.forEach( (i) => {
+                i.checked = true;
+            });
+        }
+        if(entireCheckbox.checked == false){
+            employeeCheckbox.forEach( (i) => {
+                i.checked = false;
+            });
+        }
+    });
+}
+
+const new_employeeList = {
+    
+};
+
+if(deleteBtn != null){
+    deleteBtn.addEventListener("click", e => {
+        employeeCheckbox.forEach( (i) => {
+            if(i.checked == true){
+                i.parentElement.parentElement.remove();
+                new_employeeList = inputEmployeeList.filter((_, index) => index !== i);
+            }
+        });
+        
+    });
+}
+
+if(entireCheckbox != null){
+    entireCheckbox.addEventListener("input", e => {
+        if(entireCheckbox.checked == true){
+            employeeCheckbox.forEach( (i) => {
+                i.checked = true;
+            });
+        }
+        if(entireCheckbox.checked == false){
+            employeeCheckbox.forEach( (i) => {
+                i.checked = false;
+            });
+        }
+    });
+}
+
+window.addEventListener("click", e => {
+    console.log(new_employeeList);
+})

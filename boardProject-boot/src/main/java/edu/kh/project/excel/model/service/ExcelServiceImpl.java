@@ -41,9 +41,6 @@ public class ExcelServiceImpl implements ExcelService {
 	@Override
 	public List<Map<String, String>> readExcel(MultipartFile excel) throws Exception {
 		
-		// 기존 임시 테이블의 모든 데이터 삭제
-		int deleteResult = mapper.deleteEmployee();
-		
 		String fileRename = Utility.fileRename(excel.getOriginalFilename());
 		
 		excel.transferTo(new File(excelFolderPath + fileRename));
@@ -68,12 +65,9 @@ public class ExcelServiceImpl implements ExcelService {
 	public int registEmployee(List<Employee> inputEmployeeList) {
 		
 		
-//		List<Employee> employeeList = mapper.selectEmployeeList();
-//		
-//		log.info("DBEMP : " + employeeList);
+		List<Employee> employeeList = mapper.selectEmployeeList();
 		
 		for(int i = 0; i < employeeList.size(); i++) {
-			log.info("중복있음");
 			if(employeeList.get(i).getEmpNo().equals(inputEmployeeList.get(i).getEmpNo())) {
 				return -1;
 			}
@@ -87,7 +81,6 @@ public class ExcelServiceImpl implements ExcelService {
 				return 0;
 			}
 		}
-		log.info("등록됨");
 		
 		return 1;
 	}
