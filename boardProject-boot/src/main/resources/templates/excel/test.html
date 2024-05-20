@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>구성원 일괄 추가</title>
 
     <style>
         * {
@@ -72,69 +72,74 @@
         table {
             display: flex;
             flex-direction: column;
-            width: 440px;
-            height: 500px;
+            overflow: auto;
         }
 
-        th{
-            width: 440px;
-            height: 50px;
+        th {
             border: 2px solid #076DF2; 
         }
 
-        td{
-            width: 440px;
-            height: 50px;
+        td {
             border: 2px solid #076DF2; 
             text-align: center;
         }
 
 
+
     </style>
 </head>
 <body>
-    엑셀 테스트 화면입니다
-    <form action="/excel/upload" method="post" enctype="multipart/form-data" class="uplodaExcel">
+    <h1>엑셀 테스트 화면입니다</h1>
+
+    <br>
+
+    <a href="/user">구성원</a>
+
+    <br>
+    <br>
+
+    <form action="excel/upload" method="post" enctype="multipart/form-data" class="uplodaExcel">
         <input type="file" name="excel" class="excelFile">
         <br>
-        <button class="a">다음</button>
+        <button>다음</button>
     </form>
     
 
-    <div th:if="${employeeList}" class="invite-container">
+    <div th:if="${excelList}" class="invite-container">
         <div class="invite-list">
             <table>
                 <tr>
-                    <th class="a">이름</th>
+                    <th>사번</th>
+                    <th>이름</th>
+                    <th>아이디</th>
                     <th>이메일</th>
+                    <th>닉네임</th>
+                    <th>번호</th>
+                    <th>생년월일</th>
                 </tr>
 
-                <tr th:each="employee : ${employeeList}" th:object="${employee}">
+                <tr th:each="employee : ${excelList}" th:object="${employee}">
+                    <td th:text="*{empNo} ?: 'null'">사번</td>
                     <td th:text="*{empName} ?: 'null'">이름</td>
+                    <td th:text="*{empId} ?: 'null'">이메일</td>
                     <td th:text="*{empEmail} ?: 'null'">이메일</td>
+                    <td th:text="*{empNickname} ?: 'null'">이메일</td>
+                    <td th:text="*{empTel} ?: 'null'">이메일</td>
+                    <td th:text="*{empBirth} ?: 'null'">이메일</td>
                 </tr>
 
             </table>
         </div>
 
         <div class="btn-list">
-            <button class="invite-btn">초대</button>
+            <button class="invite-btn">등록</button>
             <button class="cancel-btn">취소</button>
         </div>
     </div>
-    <div></div>
-    <div></div>
-
-
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-
     
     <script th:inline="javascript">
         const message =  /*[[${message}]]*/ "전달 받은 message";
-        const employeeList =  /*[[${employeeList}]]*/ "employeeList";
+        const inputEmployeeList =  /*[[${excelList}]]*/ "employeeList";
         
         if(message != null) alert(message);
         </script>

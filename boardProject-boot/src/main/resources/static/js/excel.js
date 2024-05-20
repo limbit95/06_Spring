@@ -25,7 +25,24 @@ const inviteBtn = document.querySelector(".invite-btn");
 
 if(inviteBtn != null){
     inviteBtn.addEventListener("click", e => {
-        
+        fetch("/user/excel/regist", {
+            method : "POST",
+            headers : {"Content-Type" : "application/json"},
+            body : JSON.stringify(inputEmployeeList)
+        })
+        .then(resp => resp.text())
+        .then(result => {
+            if(result == 0){
+                alert("사원 정보 등록 실패");
+                return;
+            }
+            if(result == -1){
+                alert("중복된 사번이 있습니다. 엑셀 파일 수정 후 다시 등록 진행해주세요.")
+                return;
+            }
+
+            alert("등록 완료");
+            inviteContainer.remove();
+        });
     })
-    
-}
+};

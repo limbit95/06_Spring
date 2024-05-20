@@ -50,7 +50,7 @@ public class Utility {
 	
 	
 	
-	public static List<Map<String, String>> excelRead(String fileRename, String folderPath) {
+	public static List<Map<String, String>> readExcel(String fileRename, String folderPath) {
 		
 		List<Map<String, String>> employeeList = new ArrayList<Map<String, String>>();
 		List<String> column = new ArrayList<String>();
@@ -77,9 +77,9 @@ public class Utility {
 				
 				for(int i = 0; i < sheet.getRow(x).getLastCellNum(); i++) {
 					// 해당 셀의 분류 값을 자동으로 인식해서 넣게끔하려 했지만 일일이 지정해서 넣는게 더 관리하기 편해서 65번~71번줄 처럼 대체 변경함
-//					if(x == 0) {
-//						column.add(String.valueOf(sheet.getRow(x).getCell(i)));
-//					}
+					if(x == 0) {
+						column.add(String.valueOf(sheet.getRow(x).getCell(i)));
+					}
 					
 					if(x > 0) {
 						// String 형 19950516 -> 1995-05-16으로 변환하는 코드인데 19950516도 DB TO_DATE 변환으로 삽입 가능해서 주석처리함
@@ -91,6 +91,7 @@ public class Utility {
 //							date = year + "-" + month + "-" + day;
 //							employee.put(column.get(i), date);
 //						}
+//						System.out.println(String.valueOf(sheet.getRow(x).getCell(i)));
 						employee.put(column.get(i), String.valueOf(sheet.getRow(x).getCell(i)));
 					}
 				}

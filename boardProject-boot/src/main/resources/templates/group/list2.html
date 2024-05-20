@@ -1,0 +1,137 @@
+<!-- Thymeleaf에서 프래그먼트를 포함할 때 사용하는 `th:include` 및 `th:replace` 구문은 약간의 문법 오류가 발생할 수 있습니다. 특히, 프래그먼트를 포함할 때 매개변수를 전달하는 부분에서 주의가 필요합니다.
+
+### 수정된 코드
+
+먼저, 메인 템플릿 파일 (`group/list.html`)에서 프래그먼트를 포함하는 부분을 올바르게 수정합니다.
+
+#### `group/list.html`:
+```html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Group List</title>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <style>
+        .handle {
+            cursor: move;
+        }
+        #groupList {
+            display: flex;
+            flex-direction: column;
+            width: 50vw;
+            list-style-type: none;
+            padding: 0;
+        }
+        .parent-li {
+            display: flex;
+            flex-direction: column;
+        }
+        .child-ul {
+            display: flex;
+            flex-direction: column;
+            list-style-type: none;
+        }
+        .child-li {
+            height: 5vh;
+            display: flex;
+            width: 5vw;
+            align-items: center;
+            border-radius: 30px;
+            padding-left: 5px;
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1vh;
+        }
+        .child-li:hover {
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Group List</h1>
+    <a th:href="@{/groups/new}">Add New Group</a>
+    
+    <ul id="groupList">
+        <li th:each="group : ${groups}" th:attr="data-id=${group.id}, id='group-' + ${group.id}" class="parent-li">
+            <i class="fa-solid fa-user-group"></i>
+            <span class="handle kk" th:text="${group.name}"></span>
+            <ul th:if="${group.children} != null" th:replace="fragments/group :: childrenFragment(group=${group})"></ul>
+        </li>
+    </ul>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function initSortable(el) {
+                new Sortable(el, {
+                    group: {
+                        name: 'nested',
+                        put: true,
+                        pull: true
+                    },
+                    animation: 150,
+                    fallbackOnBody: true,
+                    swapThreshold: 0.65,
+                    handle: '.handle',
+                    onEnd: function (evt) {
+                        var itemEl = evt.item;
+                        console.log(itemEl); // 드래그된 요소 확인
+                        var parentEl = itemEl.parentElement.closest('li');
+                        var newParentId = parentEl ? parentEl.getAttribute('data-id') : null;
+                        var groupId = itemEl.getAttribute('data-id');
+
+                        fetch('/groups/move', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                groupId: groupId,
+                                newParentId: newParentId
+                            })
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Group moved successfully');
+                            } else {
+                                console.error('Failed to move group');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            }
+
+            // Initialize Sortable for top-level list
+            var groupList = document.getElementById('groupList');
+            initSortable(groupList);
+
+            // Initialize Sortable for all nested lists
+            document.querySelectorAll('ul[id^="children-"]').forEach(function (el) {
+                initSortable(el);
+            });
+        });
+    </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="childrenFragment(group)">
+    <ul th:if="${group.children} != null" class="child-ul">
+        <li th:each="child : ${group.children}" th:attr="data-id=${child.id}, id='group-' + ${child.id}" class="child-li">
+            <span class="handle hh" th:text="${child.name}"></span>
+            <ul th:if="${child.children} != null" th:replace="this :: childrenFragment(group=${child})"></ul>
+        </li>
+    </ul>
+</html>
+
+### 주요 변경 사항
+
+1. **`th:replace` 구문 사용**:
+   - `th:replace="fragments/group :: childrenFragment(group=${group})"`와 같이 프래그먼트를 포함할 때 올바르게 매개변수를 전달합니다.
+
+2. **프래그먼트 파일 (`fragments/group.html`)**:
+   - `th:fragment`를 사용하여 프래그먼트를 정의합니다.
+   - `th:replace="this :: childrenFragment(group=${child})"`와 같이 재귀적으로 프래그먼트를 포함합니다.
+
+이 변경 사항을 적용하면, 다중 계층의 그룹 구조를 재귀적으로 렌더링할 수 있습니다. 각 `Group` 객체의 자식들이 올바르게 렌더링되고, 중첩된 계층 구조를 시각적으로 표현할 수 있습니다.
