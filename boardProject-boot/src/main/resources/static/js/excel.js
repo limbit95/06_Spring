@@ -25,6 +25,15 @@ const inviteBtn = document.querySelector(".invite-btn");
 
 if(inviteBtn != null){
     inviteBtn.addEventListener("click", e => {
+        if(inputEmployeeList.length == 0){
+            alert("등록한 사원의 정보가 없습니다");
+            return;
+        }
+
+        inputEmployeeList.forEach( (employee) => {
+            console.log(employee.empNo);
+        });
+
         fetch("/user/excel/regist", {
             method : "POST",
             headers : {"Content-Type" : "application/json"},
@@ -50,7 +59,7 @@ if(inviteBtn != null){
 // const entireBtn = document.querySelector(".entireBtn");
 const entireCheckbox = document.querySelector(".entire-checkbox");
 const deleteBtn = document.querySelector(".deleteBtn");
-const employeeCheckbox = document.querySelectorAll(".employeeCheckbox");
+let employeeCheckbox = document.querySelectorAll(".employeeCheckbox");
 
 if(entireCheckbox != null){
     entireCheckbox.addEventListener("input", e => {
@@ -66,20 +75,16 @@ if(entireCheckbox != null){
         }
     });
 }
-
-const new_employeeList = {
-    
-};
 
 if(deleteBtn != null){
     deleteBtn.addEventListener("click", e => {
-        employeeCheckbox.forEach( (i) => {
-            if(i.checked == true){
-                i.parentElement.parentElement.remove();
-                new_employeeList = inputEmployeeList.filter((_, index) => index !== i);
+        for (let i = employeeCheckbox.length - 1; i >= 0; i--) {
+            if (employeeCheckbox[i].checked == true) {
+                inputEmployeeList.splice(i, 1);
+                employeeCheckbox[i].parentElement.parentElement.remove();
             }
-        });
-        
+        }
+        console.log(inputEmployeeList);
     });
 }
 
@@ -97,7 +102,3 @@ if(entireCheckbox != null){
         }
     });
 }
-
-window.addEventListener("click", e => {
-    console.log(new_employeeList);
-})

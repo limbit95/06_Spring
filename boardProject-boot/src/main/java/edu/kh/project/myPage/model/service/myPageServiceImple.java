@@ -182,7 +182,7 @@ public class myPageServiceImple implements myPageService{
 		// 3. 삽입(INSERT) 성공 시 파일을 지정된 서버 폴더에 저장
 		if(result == 0) return 0;
 		
-		// C:/uploadFiles/test/변경된 파일명 으로
+		// C:/uploadFiles/test/변경된 파일명으로
 		// 파일을 서버 컴퓨터에 저장
 		uploadFile.transferTo(new File(folderPath + fileRename));
 		// 					 C:/uploadFiles/test/ + 20240417111605_00001.png

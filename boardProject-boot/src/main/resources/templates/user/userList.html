@@ -22,21 +22,19 @@
     </style>
 </head>
 <body>
-    
-    <a href="/user/excel">구성원 일괄 추가</a>
-
-    <br>
-    <br>
 
     <div>
+        
+        <div style="display: flex; margin-bottom: 5px;">
+            <button class="bulkRegistBtn" style="margin-right: 5px;">구성원 일괄 추가</button>
+            <button class="insertBtn" style="margin-right: 5px;">추가</button>
+            <button class="deleteBtn">삭제</button>
+        </div>
 
         <table>
 
-            <tr th:if="${#lists.size(employeeList) == 0}">
-                <th>등록된 사원 정보가 없습니다.</th>
-            </tr>
-
             <tr>
+                <th><input type="checkbox" class="entire-checkbox"></th>
                 <th>사번</th>
                 <th>이름</th>
                 <th>아이디</th>
@@ -46,7 +44,12 @@
                 <th>생년월일</th>
             </tr>
 
-            <tr th:each="employee : ${employeeList}" th:object="${employee}">
+            <tr th:if="${#lists.size(employeeList) == 0}">
+                <th colspan="8">등록된 사원 정보가 없습니다.</th>
+            </tr>
+
+            <tr th:each="employee, i : ${employeeList}" th:object="${employee}">
+                <td><input th:value="${i.index}" type="checkbox"></td>
                 <td th:text="*{empNo} ?: 'null'">사번</td>
                 <td th:text="*{empName} ?: 'null'">이름</td>
                 <td th:text="*{empId} ?: 'null'">아이디</td>
@@ -60,5 +63,7 @@
 
     </div>
     
+    
+    <script src="/js/userList.js"></script>
 </body>
 </html>

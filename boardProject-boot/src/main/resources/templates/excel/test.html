@@ -130,7 +130,7 @@
                 </tr>
 
                 <tr th:each="employee, i : ${excelList}" th:object="${employee}" class="employee-tr">
-                    <td><input type="checkbox" class="employeeCheckbox"></td>
+                    <td><input th:value="${i.index}" type="checkbox" class="employeeCheckbox"></td>
                     <td th:text="*{empNo} ?: 'null'">사번</td>
                     <td th:text="*{empName} ?: 'null'">이름</td>
                     <td th:text="*{empId} ?: 'null'">이메일</td>

@@ -41,6 +41,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 	private String folderPath;
 	
 	// 게시글 작성
+	@Transactional
 	@Override
 	public int boardInsert(Board inputBoard, List<MultipartFile> images) throws Exception {
 		// 1. 게시글 부분을 먼저
