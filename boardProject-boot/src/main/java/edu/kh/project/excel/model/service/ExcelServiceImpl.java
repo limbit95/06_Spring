@@ -67,9 +67,13 @@ public class ExcelServiceImpl implements ExcelService {
 		
 		List<Employee> employeeList = mapper.selectEmployeeList();
 		
-		for(int i = 0; i < employeeList.size(); i++) {
-			if(employeeList.get(i).getEmpNo().equals(inputEmployeeList.get(i).getEmpNo())) {
-				return -1;
+		log.info("test : " + inputEmployeeList); 
+		
+		for(int i = 0; i < inputEmployeeList.size(); i++) {
+			for(int x = 0; x < employeeList.size(); x++) {
+				if(employeeList.get(x).getEmpNo().equals(inputEmployeeList.get(i).getEmpNo())) {
+					return -1;
+				}
 			}
 		}
 		
