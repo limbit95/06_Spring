@@ -35,6 +35,7 @@ if(inviteBtn != null){
         });
 
         fetch("/user/excel/regist", {
+            
             method : "POST",
             headers : {"Content-Type" : "application/json"},
             body : JSON.stringify(inputEmployeeList)
