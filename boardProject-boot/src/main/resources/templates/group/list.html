@@ -4,8 +4,11 @@
     <title>Group List</title>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <style>
-        .handle {
-            cursor: move;
+        .handle:hover {
+            cursor:grab;
+        }
+        .handle:active {
+            cursor:grabbing;
         }
 		#groupList{     /* 부모 ul */
 			display: flex;
